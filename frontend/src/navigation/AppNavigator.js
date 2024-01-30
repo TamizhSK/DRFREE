@@ -20,6 +20,9 @@ import Activate from '../screens/Activate';
 import QuizScreen from '../screens/QuizScreen';
 import ResultsScreen from '../screens/ResultsScreen';
 import CreateStory from '../components/CreateStory';
+import LoginScreen from '../screens/Login';
+
+
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
@@ -31,6 +34,7 @@ const AppNavigator = () => {
           headerShown: false, // Set the default header to null
         }}
       >
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="StoryDetail" component={StoryDetail} />
