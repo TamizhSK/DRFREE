@@ -81,11 +81,19 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
           style={styles.createPostButton}
           onPress={() => navigation.navigate('CreatePost')}
-        >
-          <Text style={styles.createPostButtonText}>+</Text>
-        </TouchableOpacity>
-          <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto}/>
+          >
+            <Text style={styles.createPostButtonText}>+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
+            <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
           <Text style={styles.userName}>Dhejan</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -225,6 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'fff', // Use a color that represents a drug-free theme
     margin: 10,
     paddingTop:0,
+    marginBottom:0,
   },
   topNavbar: {
     flexDirection: 'row',
@@ -255,7 +264,7 @@ const styles = StyleSheet.create({
     color: '#000', // White color for the username text
   },
   pad:{
-    paddingBottom: 30,
+    paddingBottom: 35,
   },
   scrollContainer: {
     flex: 1,

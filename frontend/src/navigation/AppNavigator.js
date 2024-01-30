@@ -20,6 +20,7 @@ import Activate from '../screens/Activate';
 import QuizScreen from '../screens/QuizScreen';
 import ResultsScreen from '../screens/ResultsScreen';
 import CreateStory from '../components/CreateStory';
+import ProfileScreen from '../screens/ProfileScreen';
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
@@ -48,6 +49,7 @@ const AppNavigator = () => {
         <Stack.Screen name="QuizScreen" component={QuizScreen} />
         <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
         <Stack.Screen name='CreateStory' component={CreateStory}/>
+        <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
 
         {/* Add screens for other routes like 'CreatePost', 'PostDetail', etc. */}
       </Stack.Navigator>

@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'fff', // Use a color that represents a drug-free theme
       margin: 10,
       paddingTop:0,
+      marginBottom:0,
     },
     topNavbar: {
       flexDirection: 'row',

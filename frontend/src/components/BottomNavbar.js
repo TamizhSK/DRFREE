@@ -1,6 +1,8 @@
 // BottomNavbar.js
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet,Image,  } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const BottomNavbar = ({ navigation }) => {
   return (
@@ -9,25 +11,31 @@ const BottomNavbar = ({ navigation }) => {
         style={styles.navItem}
         onPress={() => navigation.navigate('Home')}
       >
-        <Text style={styles.navItemText}>Home</Text>
+        <Text style={styles.navItemText}><Icon name="home" size={25} color="#000" /></Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.navItem}
         onPress={() => navigation.navigate('Story')}
       >
-        <Text style={styles.navItemText}>Story</Text>
+        <Image
+        source={require('../../assets/Storypen.jpg')}
+        style={{ width: 30, height: 35 }}
+      />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.navItem}
         onPress={() => navigation.navigate('HelpDesk')}
       >
-        <Text style={styles.navItemText}>HelpDesk</Text>
+         <Image
+        source={require('../../assets/HelpDesk.jpg')}
+        style={{ width: 40, height: 30 }}
+      />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.navItem}
         onPress={() => navigation.navigate('Activate')}
       >
-        <Text style={styles.navItemText}>Activate</Text>
+        <MaterialCommunityIcons name="gamepad-variant" size={24} color="#333" />
       </TouchableOpacity>
     </View>
   );

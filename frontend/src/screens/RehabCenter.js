@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'fff', // Use a color that represents a drug-free theme
         margin: 10,
         paddingTop:0,
+        marginBottom:0,
       },
       topNavbar: {
         flexDirection: 'row',
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
       },
       listContainer: {
         justifyContent: 'space-between',
-        paddingBottom: 40,
+        paddingBottom: 55,
       },
       centerContainer: {
         flex: 1,
