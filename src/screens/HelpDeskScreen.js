@@ -10,7 +10,7 @@ const HelpDeskBanners = ({ navigation }) => {
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
           <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-          <Text style={styles.userName}>John Doe</Text>
+          <Text style={styles.userName}>Dhejan</Text>
         </View>
       </View>
       <ScrollView style={styles.scrollContainer}>

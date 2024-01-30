@@ -39,11 +39,18 @@ const CommunityScreen = ({ navigation }) => {
         <View style={styles.container}>
           {/* Top Navbar */}
       <View style={styles.topNavbar}>
-        <Text style={styles.logo}>Community</Text>
+      <View>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={styles.back}>
+          <Text style={styles.backButton}>{'◀︎'}</Text>
+          <Text style={styles.logo}>Community</Text>
+          </View>
+        </TouchableOpacity>
+        </View>
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
           <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-          <Text style={styles.userName}>John Doe</Text>
+          <Text style={styles.userName}>Dhejan</Text>
         </View>
       </View>
       <ScrollView style={styles.scrollContainer}>
@@ -131,6 +138,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000', // White color for the username text
+  },
+  back:{
+    flexDirection: 'row',
+  alignItems: 'center',
+  },
+  backButton:{
+    fontSize: 25,
+    paddingBottom: 5,
   },
   scrollContainer: {
     flex: 1,

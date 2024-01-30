@@ -51,12 +51,18 @@ const StoryScreen = ({ navigation }) => {
   <View style={styles.userContainer}>
     {/* Update the image source to use Asset.fromModule */}
     <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-    <Text style={styles.userName}>John Doe</Text>
+    <Text style={styles.userName}>Dhejan</Text>
   </View>
 </View>
-
       {/* ScrollView for stories */}
       <ScrollView style={styles.scrollContainer}>
+      <TouchableOpacity
+          style={styles.createPostButton}
+          onPress={() => navigation.navigate('CreateStory')}
+        >
+          <Text style={styles.createPostButtonText}>Create Story</Text>
+        </TouchableOpacity>
+      <View style={styles.pad}>
         {/* Map through stories and render story components */}
         {stories.map((story) => (
           <TouchableOpacity
@@ -79,8 +85,8 @@ const StoryScreen = ({ navigation }) => {
             <Text style={styles.storyPreview}>{story.preview}</Text>
           </TouchableOpacity>
         ))}
+        </View>
       </ScrollView>
-
       {/* Bottom Navbar */}
       <BottomNavbar navigation={navigation} />
     </View>
@@ -121,8 +127,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000', // White color for the username text
   },
+  pad:{
+    paddingBottom: 30,
+  },
   scrollContainer: {
     flex: 1,
+  },
+  createPostButton: {
+    backgroundColor: '#E16721CC',
+    borderRadius: 10,
+    paddingVertical: 15,
+    alignItems: 'center',
+    marginBottom: 20,
+    margin: 10,
+    borderTopWidth: 0,
+  },
+  createPostButtonText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   storyTitle: {
     fontSize: 18,

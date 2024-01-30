@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
-const CreatePost = ({ navigation }) => {
+const CreateStory = ({ navigation }) => {
   const [caption, setCaption] = useState('');
   const [fileAttachment, setFileAttachment] = useState(null); // You can use a file picker library for this
 
@@ -28,7 +28,13 @@ const CreatePost = ({ navigation }) => {
       <Text style={styles.title}>Create a #Society-Change here</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter your caption"
+        placeholder="Enter your Title"
+        value={caption}
+        onChangeText={(text) => setCaption(text)}
+      />
+      <TextInput
+        style={styles.inputStory}
+        placeholder="Enter your Content"
         value={caption}
         onChangeText={(text) => setCaption(text)}
       />
@@ -37,7 +43,7 @@ const CreatePost = ({ navigation }) => {
       {/* Display the selected file name or details */}
       <Button title="Attach File" onPress={() => {/* Handle file attachment */}} />
       <Text>{fileAttachment ? fileAttachment.name : 'No file selected'}</Text>
-      <Button title="Post" onPress={handleCreatePost} />
+      <Button title="Post Story" onPress={handleCreatePost} />
       <BottomNavbar navigation={navigation} />
     </View>
   );
@@ -84,7 +90,15 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   input: {
-    height: 80,
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius:5,
+  },
+  inputStory: {
+    height: 100,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 20,
@@ -116,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatePost;
+export default CreateStory;

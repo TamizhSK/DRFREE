@@ -1,17 +1,74 @@
 // screens/HomeScreen.js
-import React from 'react';
+import React ,{useState}from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
+import { Ionicons } from '@expo/vector-icons';
+
 
 const HomeScreen = ({ navigation }) => {
+
+  const [activeButton, setActiveButton] = useState(null);
+  
+    const handleButtonPress = (buttonName) => {
+      setActiveButton(buttonName);
+      // Add logic for handling button press (if needed)
+  
+      // Add logic to change the button color on press
+      switch (buttonName) {
+        case 'Doctors':
+          // Code to change the color of the 'Doctors' button
+          break;
+        case 'RehabCenter':
+          navigation.navigate('RehabCenter');
+          break;
+        case 'Helpline':
+          navigation.navigate('HelpLine');
+          break;
+        case 'Community':
+          navigation.navigate('Community');
+          break;
+        case 'EducationOfDrug':
+          navigation.navigate('EducationOfDrug');
+          break;
+        case 'AiChatbot':
+          navigation.navigate('AiChatbot');
+          break;
+        case 'Activate':
+          navigation.navigate('Activate');
+          break;
+        case 'Story':
+          navigation.navigate('Story');
+          break;
+        default:
+          break;
+      }
+  
+      // Add navigation logic here if needed
+    };
+    setTimeout(() => {
+        setActiveButton(null);
+      }, 50);
+  const [likes, setLikes] = useState({
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  });
+  const handleLike = (postId) => {
+    setLikes((prevLikes) => ({
+      ...prevLikes,
+      [postId]: prevLikes[postId] + 1,
+    }));
+  };
   const posts = [
-    { id: 1, user: { name: 'John Doe', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri }, content: 'Post 1', imageUrl:Asset.fromModule(require('../../assets/post1.jpeg')).uri, caption: 'Promoting a drug-free lifestyle.' },
+    { id: 1, user: { name: 'Dhejan', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri }, content: 'Post 1', imageUrl:Asset.fromModule(require('../../assets/post1.jpeg')).uri, caption: 'Promoting a drug-free lifestyle.' },
     { id: 2, user: { name: 'Jane Smirithy', photoUrl: Asset.fromModule(require('../../assets/profile2.jpeg')).uri  }, content: 'Post 2', imageUrl: Asset.fromModule(require('../../assets/post3.jpeg')).uri, caption: 'Choose a healthy and drug-free life.' },
-    { id: 3, user: { name: 'Bob Johnson', photoUrl: Asset.fromModule(require('../../assets/profile4.jpeg')).uri  }, content: 'Post 3', imageUrl:Asset.fromModule(require('../../assets/post2.jpeg')).uri, caption: 'Join the movement for a drug-free society.' },
+    { id: 3, user: { name: 'Jawagal', photoUrl: Asset.fromModule(require('../../assets/profile4.jpeg')).uri  }, content: 'Post 3', imageUrl:Asset.fromModule(require('../../assets/post2.jpeg')).uri, caption: 'Join the movement for a drug-free society.' },
     // Add more posts
     { id: 4, user: { name: 'Alice Williams', photoUrl:Asset.fromModule(require('../../assets/profile3.jpeg')).uri  }, content: 'Post 4', imageUrl: Asset.fromModule(require('../../assets/post4.jpeg')).uri, caption: 'Say no to drugs!' },
-    { id: 5, user: { name: 'Charlie Davis', photoUrl:Asset.fromModule(require('../../assets/profile5.jpeg')).uri }, content: 'Post 5', imageUrl: Asset.fromModule(require('../../assets/post5.jpeg')).uri, caption: 'Living a drug-free lifestyle.' },
+    { id: 5, user: { name: 'Madhan', photoUrl:Asset.fromModule(require('../../assets/profile5.jpeg')).uri }, content: 'Post 5', imageUrl: Asset.fromModule(require('../../assets/post5.jpeg')).uri, caption: 'Living a drug-free lifestyle.' },
   ];
 
   return (
@@ -21,19 +78,101 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.logo}>DR Free</Text>
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
-          <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-          <Text style={styles.userName}>John Doe</Text>
+          <TouchableOpacity
+          style={styles.createPostButton}
+          onPress={() => navigation.navigate('CreatePost')}
+        >
+          <Text style={styles.createPostButtonText}>+</Text>
+        </TouchableOpacity>
+          <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto}/>
+          <Text style={styles.userName}>Dhejan</Text>
         </View>
       </View>
 
       <ScrollView style={styles.scrollContainer}>
-        <TouchableOpacity
-          style={styles.createPostButton}
-          onPress={() => navigation.navigate('CreatePost')}
-        >
-          <Text style={styles.createPostButtonText}>Create Post</Text>
-        </TouchableOpacity>
 
+        <ScrollView
+      horizontal
+      contentContainerStyle={styles.buttonContainer}
+      showsHorizontalScrollIndicator={false}
+    >
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'Doctors' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('Doctors')}
+      >
+        <Text style={styles.buttonText}>Doctors</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'RehabCenter' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('RehabCenter')}
+      >
+        <Text style={styles.buttonText}>Rehab Center</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'Helpline' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('Helpline')}
+      >
+        <Text style={styles.buttonText}>Helpline</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'Community' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('Community')}
+      >
+        <Text style={styles.buttonText}>Community</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'EducationOfDrug' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('EducationOfDrug')}
+      >
+        <Text style={styles.buttonText}>Education</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'AiChatbot' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('AiChatbot')}
+      >
+        <Text style={styles.buttonText}>Gusto AI</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'Activate' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('Activate')}
+      >
+        <Text style={styles.buttonText}>Quizzy</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          activeButton === 'Story' && { backgroundColor: '#E16721CC' },
+        ]}
+        onPress={() => handleButtonPress('Story')}
+      >
+        <Text style={styles.buttonText}>Stories</Text>
+      </TouchableOpacity>
+      
+    </ScrollView>
+        <View style={styles.pad}>
         {posts.map((post) => (
           <TouchableOpacity
             key={post.id}
@@ -49,16 +188,30 @@ const HomeScreen = ({ navigation }) => {
                   style={styles.verificationIcon}
               />
             </View>
-
-            {/* Post content */}
             <Image source={{ uri: post.imageUrl }} style={styles.postImage} />
             <Text style={styles.postCaption}>{post.caption}</Text>
-            <View style={styles.footer}>
-              <Text style={styles.likeComment}>Like</Text>
-              <Text style={styles.likeComment}>Comment</Text>
-            </View>
+    {/* Footer */}
+    <View style={styles.footer}>
+      <TouchableOpacity style={styles.likeCommentButton} onPress={() => handleLike(post.id)}>
+        
+            {/* Like count and buttons */}
+    <View style={styles.likeContainer}>
+      <TouchableOpacity onPress={() => handleLike(post.id)}>
+          <Ionicons name="heart" size={20} color="#FF0000" />
+      </TouchableOpacity>
+      <Text style={styles.likeCount}>{likes[post.id]} Likes</Text>
+    </View>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.likeCommentButton}>
+        <Text style={styles.likeComment}>Repost</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.likeCommentButton}>
+        <Text style={styles.likeComment}>Send</Text>
+      </TouchableOpacity>
+    </View>
           </TouchableOpacity>
         ))}
+        </View>
       </ScrollView>
 
       {/* Bottom Navbar */}
@@ -101,22 +254,44 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000', // White color for the username text
   },
+  pad:{
+    paddingBottom: 30,
+  },
   scrollContainer: {
     flex: 1,
   },
   createPostButton: {
-    backgroundColor: '#E16721CC',
-    borderRadius: 10,
-    paddingVertical: 15,
-    alignItems: 'center',
-    marginBottom: 20,
-    margin: 10,
-    borderTopWidth: 0,
+    padding: 13, backgroundColor: "#e28743", borderRadius: 90, marginRight: 10, height: 40, 
   },
   createPostButtonText: {
-    color: '#000',
-    fontSize: 16,
+    color: "white", textAlign: "center", fontWeight: "bold", alignSelf: "center", marginTop: 0, fontSize: 15,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start', // Adjust the alignment as needed
+    alignItems: 'center',
+    paddingHorizontal: 0, // Adjust the horizontal padding as needed
+    marginVertical: 20,
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    backgroundColor: '#ddd',
+    marginHorizontal: 5, // Adjust the horizontal margin as needed
+    borderWidth: 1,
+    borderColor: '#E16721',
+  },
+  activeButton: {
+    backgroundColor: '#E16721CC', // Dark color for the active button
+
+  },
+  buttonText: {
+    fontSize: 13,
     fontWeight: 'bold',
+    color: '#000',
+    alignSelf: "auto",
+    
   },
   postContainer: {
     borderWidth: 1,
@@ -161,11 +336,28 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
+    justifyContent : "space-around",
+    paddingLeft : 20,
+    paddingBottom: 10,
+    paddingRight : 20,
   },
   likeComment: {
-    color: '#007bff',
+    paddingTop: 3,
+    color: '#1c1c1c',
+  },
+  likeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 3,
+  },
+  likeIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
+  likeCount: {
+    fontSize: 14,
+    color: '#1c1c1c',
   },
   bottomNavbar: {
     flexDirection: 'row',
@@ -188,6 +380,9 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: 14,
     color: '#555', // Dark Gray
+    borderBottomColor : "#B4B4B4",
+    borderBottomWidth : 0.3,
+    borderBottomRightRadius : 4,
   },
 });
 export default HomeScreen;
