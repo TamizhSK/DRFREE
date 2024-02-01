@@ -23,6 +23,7 @@ import WelcomeScreen from '../Auth/WelcomeScreen';
 import SignUpScreen from '../Auth/Singup';
 import SigninScreen from '../Auth/Signin';
 import PasswordReset from '../Auth/PasswordReset';
+import DocSignUp from '../Auth/DocSignUp';
 
 
 const Stack = createStackNavigator();
@@ -40,6 +41,7 @@ const AppNavigator = () => {
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
        <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="Signup" component={SignUpScreen} />
+        <Stack.Screen name="DocSignUp" component={DocSignUp} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="StoryDetail" component={StoryDetail} />

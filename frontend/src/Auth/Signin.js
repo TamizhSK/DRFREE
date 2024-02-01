@@ -92,6 +92,12 @@ export default function SigninScreen() {
             <Text style={{ fontWeight: '600', color: '#FFD700' }}> Sign Up</Text>
           </TouchableOpacity>
         </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 32 }}>
+          <Text style={{ color: '#6B7280', fontWeight: '600' }}>Doctor?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('DocSignUp')}>
+            <Text style={{ fontWeight: '600', color: '#FFD700' }}> Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
