@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation }) => {
   const handleserver = async() => {
     try {
       console.log("first-client");
-      const res = await fetch("http://172.16.22.98:6969/api/get");
+      const res = await fetch("http://172.16.22.99:6969/api/get");
       const data = await res.json();
       console.log(data.message);
     } catch (error) {
@@ -94,7 +94,7 @@ const HomeScreen = ({ navigation }) => {
   ]);
   
   
-  const baseUrl = process.env.BASEURL || "http://172.16.22.98:6969";
+  const baseUrl = process.env.BASEURL || "http://172.16.22.99:6969";
   
   const fetchData = async() => {
     setRefresh(true);

@@ -11,15 +11,20 @@ export default function SignUpScreen() {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [parentName, setParentName] = useState('');
+  const [parentEmail, setParentEmail] = useState('');
+
 
   const handleSignUp = async () => {
     try {
-      const apiUrl = 'https://your-backend-api-url.com/signup';
+      const apiUrl = 'http://172.16.22.99:6969/api/auth/UserSignUp';
       const response = await axios.post(apiUrl, {
-        userName: userName,
-        fullName: fullName,
+        username: userName,
+        fullname: fullName,
         email: email,
         password: password,
+        parentname: parentName,
+        parentEmail: parentEmail,
       });
 
       // Handle success, for example, navigate to the home screen
@@ -105,10 +110,10 @@ export default function SignUpScreen() {
               borderRadius: 20,
               marginBottom: 16,
             }}
-            secureTextEntry
-            value={password}
-            placeholder='Enter Password'
-            onChangeText={(text) => setPassword(text)}
+          
+            value={parentName}
+            placeholder='Enter Parent Name'
+            onChangeText={(text) => setParentName(text)}
           />
               <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>Father/Mother/Guardian Email</Text>
           <TextInput
@@ -119,10 +124,10 @@ export default function SignUpScreen() {
               borderRadius: 20,
               marginBottom: 16,
             }}
-            secureTextEntry
-            value={password}
-            placeholder='Enter Password'
-            onChangeText={(text) => setPassword(text)}
+          
+            value={parentEmail}
+            placeholder='Enter Parent Email'
+            onChangeText={(text) => setParentEmail(text)}
           />
           <TouchableOpacity onPress={handleSignUp} style={{ backgroundColor: '#FFD700', borderRadius: 20, paddingVertical: 12 }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Sign Up</Text>

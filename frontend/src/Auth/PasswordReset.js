@@ -12,7 +12,7 @@ const ForgotPasswordScreen = () => {
   const handleResetPassword = async () => {
     try {
       // Replace the following URL and endpoint with your actual backend details
-      const apiUrl = 'https://your-backend-api-url.com/reset-password';
+      const apiUrl = 'http://172.16.22.99:6969/reset-password';
 
       // Make sure to handle the response based on your backend structure
       const response = await axios.post(apiUrl, { email });

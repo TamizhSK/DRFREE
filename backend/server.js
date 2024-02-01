@@ -7,16 +7,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
-const Postrouter = require('./routers/Post')
+const Postrouter = require('./routers/Post');
+const Authrouter = require('./routers/Auth');
 
 
 app.use('/api/post', Postrouter ); // Post routers  
-
+app.use('/api/auth', Authrouter ); // Auth Routers
 // app.use('/api/auth', Authrouter); // Auth Routers
 app.get("/api/get", (req, res)=>{
     console.log("first-server")
     res.json({message: "hello world!!"});
+    
 });
+
 
 
 

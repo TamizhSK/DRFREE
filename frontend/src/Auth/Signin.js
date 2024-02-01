@@ -8,39 +8,39 @@ import { useNavigation } from '@react-navigation/native';
 export default function SigninScreen() {
 
   const navigation = useNavigation();
-  const [email, setEmail] = useState('john@gmail.com');
-  const [password, setPassword] = useState('test12345');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSignIn = async () => {
     try {
-      navigation.navigate('Home');
+      //navigation.navigate('Home');
       // Replace the following URL with your actual backend authentication endpoint
-      // const apiUrl = 'https://172.16.22.98/api/login';
+      const apiUrl = 'http://172.16.22.99:6969/api/auth/login';
+      //navigation.navigate('Home');
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
 
-      // const response = await fetch(apiUrl, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     email: email,
-      //     password: password,
-      //   }),
-      // });
+      const responseData = await response.json();
 
-      // const responseData = await response.json();
+      // Check the response status
+      if (response.ok) {
+        // Handle successful login, e.g., store user token in AsyncStorage
+        console.log('Login successful:', responseData);
 
-      // // Check the response status
-      // if (response.ok) {
-      //   // Handle successful login, e.g., store user token in AsyncStorage
-      //   console.log('Login successful:', responseData);
-
-      //   // Redirect to the Home screen or perform other navigation actions
-      //   navigation.navigate('Home');
-      // } else {
-      //   // Handle login failure, e.g., display an error message
-      //   console.error('Login failed:', responseData.error);
-      // }
+        // Redirect to the Home screen or perform other navigation actions
+        navigation.navigate('Home');
+      } else {
+        // Handle login failure, e.g., display an error message
+        console.error('Login failed:', responseData.error);
+      }
     } catch (error) {
       // Handle network errors or other exceptions
       console.error('Error during login:', error.message);
@@ -64,7 +64,8 @@ export default function SigninScreen() {
               marginTop : 10,
             }}
             placeholder="email"
-            value="john@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>Password</Text>
           <TextInput
@@ -78,7 +79,8 @@ export default function SigninScreen() {
             }}
             secureTextEntry
             placeholder="password"
-            value="test12345"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <TouchableOpacity style={{ alignItems: 'flex-end' }} onPress={() => navigation.navigate('passreset')}>
             <Text style={{ color: '#4B5563', marginBottom: 16 }}>Forgot Password?</Text>
