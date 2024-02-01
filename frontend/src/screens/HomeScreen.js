@@ -1,6 +1,6 @@
 // screens/HomeScreen.js
-import React ,{useState}from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React ,{useState, useEffect}from 'react';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, RefreshControl } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,7 +9,19 @@ import { Ionicons } from '@expo/vector-icons';
 const HomeScreen = ({ navigation }) => {
 
   const [activeButton, setActiveButton] = useState(null);
-  
+  const [refresh, setRefresh] = useState(false);
+  // window.reload;
+  const handleserver = async() => {
+    try {
+      console.log("first-client");
+      const res = await fetch("http://172.16.22.98:6969/api/get");
+      const data = await res.json();
+      console.log(data.message);
+    } catch (error) {
+      console.log("first", error);
+    }
+  };
+
     const handleButtonPress = (buttonName) => {
       setActiveButton(buttonName);
       // Add logic for handling button press (if needed)
@@ -18,6 +30,7 @@ const HomeScreen = ({ navigation }) => {
       switch (buttonName) {
         case 'Doctors':
           // Code to change the color of the 'Doctors' button
+          handleserver();
           break;
         case 'RehabCenter':
           navigation.navigate('RehabCenter');
@@ -62,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
       [postId]: prevLikes[postId] + 1,
     }));
   };
-  const posts = [
+  const pp = [
     { id: 1, user: { name: 'Dhejan', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri }, content: 'Post 1', imageUrl:Asset.fromModule(require('../../assets/post1.jpeg')).uri, caption: 'Promoting a drug-free lifestyle.' },
     { id: 2, user: { name: 'Jane Smirithy', photoUrl: Asset.fromModule(require('../../assets/profile2.jpeg')).uri  }, content: 'Post 2', imageUrl: Asset.fromModule(require('../../assets/post3.jpeg')).uri, caption: 'Choose a healthy and drug-free life.' },
     { id: 3, user: { name: 'Jawagal', photoUrl: Asset.fromModule(require('../../assets/profile4.jpeg')).uri  }, content: 'Post 3', imageUrl:Asset.fromModule(require('../../assets/post2.jpeg')).uri, caption: 'Join the movement for a drug-free society.' },
@@ -70,6 +83,44 @@ const HomeScreen = ({ navigation }) => {
     { id: 4, user: { name: 'Alice Williams', photoUrl:Asset.fromModule(require('../../assets/profile3.jpeg')).uri  }, content: 'Post 4', imageUrl: Asset.fromModule(require('../../assets/post4.jpeg')).uri, caption: 'Say no to drugs!' },
     { id: 5, user: { name: 'Madhan', photoUrl:Asset.fromModule(require('../../assets/profile5.jpeg')).uri }, content: 'Post 5', imageUrl: Asset.fromModule(require('../../assets/post5.jpeg')).uri, caption: 'Living a drug-free lifestyle.' },
   ];
+  
+  const [posts, setPosts] = useState([
+    { id: 1, user: { name: 'Dhejan', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri }, content: 'Post 1', imageUrl:Asset.fromModule(require('../../assets/post1.jpeg')).uri, caption: 'Promoting a drug-free lifestyle.' },
+    { id: 2, user: { name: 'Jane Smirithy', photoUrl: Asset.fromModule(require('../../assets/profile2.jpeg')).uri  }, content: 'Post 2', imageUrl: Asset.fromModule(require('../../assets/post3.jpeg')).uri, caption: 'Choose a healthy and drug-free life.' },
+    { id: 3, user: { name: 'Jawagal', photoUrl: Asset.fromModule(require('../../assets/profile4.jpeg')).uri  }, content: 'Post 3', imageUrl:Asset.fromModule(require('../../assets/post2.jpeg')).uri, caption: 'Join the movement for a drug-free society.' },
+    // Add more posts
+    { id: 4, user: { name: 'Alice Williams', photoUrl:Asset.fromModule(require('../../assets/profile3.jpeg')).uri  }, content: 'Post 4', imageUrl: Asset.fromModule(require('../../assets/post4.jpeg')).uri, caption: 'Say no to drugs!' },
+    { id: 5, user: { name: 'Madhan', photoUrl:Asset.fromModule(require('../../assets/profile5.jpeg')).uri }, content: 'Post 5', imageUrl: Asset.fromModule(require('../../assets/post5.jpeg')).uri, caption: 'Living a drug-free lifestyle.' },
+  ]);
+  
+  
+  const baseUrl = process.env.BASEURL || "http://172.16.22.98:6969";
+  
+  const fetchData = async() => {
+    setRefresh(true);
+    const res = await fetch(baseUrl+'/api/post/posts');
+    if(!res.ok){
+      setPosts(pp);
+    }
+    const data = await res.json();
+    console.log(data);
+    const allposts = data.map((d)=> {
+      return{
+        id : d._id,
+        user: { name: 'Dhejan', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri },
+        content: d.caption,
+        imageUrl: d.postImage,
+        caption: d.caption,
+      }
+    })
+    const ap = allposts.sort((a,b) => a.createdAt > b.createdAt ? 1 : -1);
+    setPosts(ap);
+    setRefresh(false);
+  }
+  
+  // useEffect(() => {
+  //   fetchData();
+  // },[]);
 
   return (
     <View style={styles.container}>
@@ -89,7 +140,8 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView style={styles.scrollContainer} 
+      refreshControl={<RefreshControl refreshing={refresh} onRefresh={fetchData}/>}>
 
         <ScrollView
       horizontal
@@ -172,14 +224,14 @@ const HomeScreen = ({ navigation }) => {
       </TouchableOpacity>
       
     </ScrollView>
+        
         <View style={styles.pad}>
         {posts.map((post) => (
           <TouchableOpacity
             key={post.id}
             style={styles.postContainer}
-            onPress={() => navigation.navigate('PostDetail', { post })}
+            // onPress={() => navigation.navigate('PostDetail', { post })}
           >
-            {/* User details */}
             <View style={styles.postUserContainer}>
               <Image source={{ uri: post.user.photoUrl }} style={styles.postUserPhoto} />
               <Text style={styles.postUserName}>{post.user.name}</Text>
@@ -188,7 +240,7 @@ const HomeScreen = ({ navigation }) => {
                   style={styles.verificationIcon}
               />
             </View>
-            <Image source={{ uri: post.imageUrl }} style={styles.postImage} />
+            <Image source={{ uri: `data:image/jpeg;base64,${post.imageUrl}`}} style={styles.postImage} />
             <Text style={styles.postCaption}>{post.caption}</Text>
     {/* Footer */}
     <View style={styles.footer}>
