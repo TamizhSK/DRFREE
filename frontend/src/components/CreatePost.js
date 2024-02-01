@@ -2,21 +2,85 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
 import { Asset } from 'expo-asset';
+import * as ImagePicker from 'expo-image-picker'; // Import the image picker library
 import BottomNavbar from '../components/BottomNavbar';
+// import {BASEURL} from '@env';
+
+
 const CreatePost = ({ navigation }) => {
   const [caption, setCaption] = useState('');
-  const [fileAttachment, setFileAttachment] = useState(null); // You can use a file picker library for this
-
-  const handleCreatePost = () => {
+  const [fileAttachment, setFileAttachment] = useState(null);
+  // console.log(fileAttachment);
+  const baseUrl = process.env.BASEURL || "http://172.16.22.98:6969";
+  console.log(baseUrl);
+  const handleCreatePost = async() => {
     // Implement logic to create a post with the provided caption and fileAttachment
     // You can use API calls, state management, or any other method based on your app's architecture
     // After creating the post, navigate to the HomeScreen or wherever you want
+    console.log("create Post");
+    if (caption === ""){
+      alert ("Please enter caption");
+      return;
+    } else if (!fileAttachment) {
+      alert("Please attach an image!");
+      return;
+    } else {
+      const res = await fetch(baseUrl+"/api/post/posts", {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+          caption: caption,
+          postImage: fileAttachment,
+          userID: '12',
+        })
+      });
+      // console.log(res);
+      console.log(caption);
+      const data = await res.json();
+      console.log(data);
+    }
+    
     navigation.navigate('Home');
   };
 
+  const UploadImage = async() => {
+    try {
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const res = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 0.5,
+        aspect: [1, 1],
+        base64: true,
+      });
+      console.log(res.assets[0].base64);
+      setFileAttachment(res.assets[0].base64);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const convertToBase64 = (res) => {
+    try {
+      var reader = new FileReader();
+      reader.readAsDataURL(res.assets[0]);
+      reader.onload = () => {
+        console.log(reader.result);
+        setFileAttachment(reader.result);
+      };
+      reader.onerror = error => {
+        console.log(" reader Error:", error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <View style={styles.container}>
-        {/* Top Navbar */}
+      {/* Top Navbar */}
       <View style={styles.topNavbar}>
         <Text style={styles.logo}>DR Free</Text>
         <View style={styles.userContainer}>
@@ -32,11 +96,14 @@ const CreatePost = ({ navigation }) => {
         value={caption}
         onChangeText={(text) => setCaption(text)}
       />
-      {/* Implement file attachment functionality here */}
-      {/* You can use a library like react-native-document-picker for file selection */}
-      {/* Display the selected file name or details */}
-      <Button title="Attach File" onPress={() => {/* Handle file attachment */}} />
-      <Text>{fileAttachment ? fileAttachment.name : 'No file selected'}</Text>
+      {/* File Attachment */}
+      <Button title="Attach Image" onPress={UploadImage} />
+      {fileAttachment && (
+        <View>
+          <Image source={{uri: `data:image/jpeg;base64,${fileAttachment}`}} style={{ width: 200, height: 200 }} />
+          <Text>{fileAttachment.fileName}</Text>
+        </View>
+      )}
       <Button title="Post" onPress={handleCreatePost} />
       <BottomNavbar navigation={navigation} />
     </View>
@@ -89,30 +156,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-    borderRadius:5,
-  },
-  bottomNavbar: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    backgroundColor: '#fff',
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 10,
-    elevation: 0,
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navItemText: {
-    marginLeft: 15,
-  },
-  postCaption: {
-    padding: 15,
-    fontSize: 14,
-    color: '#555', // Dark Gray
+    borderRadius: 5,
   },
 });
 

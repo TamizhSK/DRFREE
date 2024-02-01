@@ -2,11 +2,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import HomeScreen from '../screens/HomeScreen';
 import StoryScreen from '../screens/StoryScreen';
 import StoryDetail from '../screens/StoryDetail';
-import HelpDeskScreen from '../screens/HelpDeskScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import CreatePost from '../components/CreatePost';
 import AiChatbot from '../screens/Chatbot';
@@ -20,22 +18,34 @@ import Activate from '../screens/Activate';
 import QuizScreen from '../screens/QuizScreen';
 import ResultsScreen from '../screens/ResultsScreen';
 import CreateStory from '../components/CreateStory';
+import HelpDesk from '../screens/HelpDeskScreen';
+import WelcomeScreen from '../Auth/WelcomeScreen';
+import SignUpScreen from '../Auth/Singup';
+import SigninScreen from '../Auth/Signin';
+import PasswordReset from '../Auth/PasswordReset';
+import DocSignUp from '../Auth/DocSignUp';
+
+
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Signin"
         screenOptions={{
-          headerShown: false, // Set the default header to null
+          headerShown: false,
         }}
       >
-        <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name='passreset' component={PasswordReset} />
+      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+       <Stack.Screen name="Signin" component={SigninScreen} />
+        <Stack.Screen name="Signup" component={SignUpScreen} />
+        <Stack.Screen name="DocSignUp" component={DocSignUp} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="StoryDetail" component={StoryDetail} />
-        <Stack.Screen name="HelpDesk" component={HelpDeskScreen} />
+        <Stack.Screen name="HelpDesk" component={HelpDesk} />
         <Stack.Screen name="Community" component={CommunityScreen} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
         <Stack.Screen name="AiChatbot" component={AiChatbot} />
@@ -48,12 +58,13 @@ const AppNavigator = () => {
         <Stack.Screen name="Activate" component={Activate} />
         <Stack.Screen name="QuizScreen" component={QuizScreen} />
         <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
+        <Stack.Screen name="CreateStory" component={CreateStory}/>
         <Stack.Screen name='CreateStory' component={CreateStory}/>
         <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
 
         {/* Add screens for other routes like 'CreatePost', 'PostDetail', etc. */}
       </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
   );
 };
 
