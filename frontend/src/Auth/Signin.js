@@ -13,33 +13,34 @@ export default function SigninScreen() {
 
   const handleSignIn = async () => {
     try {
+      navigation.navigate('Home');
       // Replace the following URL with your actual backend authentication endpoint
-      const apiUrl = 'https://your-backend-api-url.com/login';
+      // const apiUrl = 'https://172.16.22.98/api/login';
 
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
+      // const response = await fetch(apiUrl, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     email: email,
+      //     password: password,
+      //   }),
+      // });
 
-      const responseData = await response.json();
+      // const responseData = await response.json();
 
-      // Check the response status
-      if (response.ok) {
-        // Handle successful login, e.g., store user token in AsyncStorage
-        console.log('Login successful:', responseData);
+      // // Check the response status
+      // if (response.ok) {
+      //   // Handle successful login, e.g., store user token in AsyncStorage
+      //   console.log('Login successful:', responseData);
 
-        // Redirect to the Home screen or perform other navigation actions
-        navigation.navigate('Home');
-      } else {
-        // Handle login failure, e.g., display an error message
-        console.error('Login failed:', responseData.error);
-      }
+      //   // Redirect to the Home screen or perform other navigation actions
+      //   navigation.navigate('Home');
+      // } else {
+      //   // Handle login failure, e.g., display an error message
+      //   console.error('Login failed:', responseData.error);
+      // }
     } catch (error) {
       // Handle network errors or other exceptions
       console.error('Error during login:', error.message);

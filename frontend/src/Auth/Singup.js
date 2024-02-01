@@ -36,6 +36,7 @@ export default function SignUpScreen() {
   };
 
   return (
+    
     <View style={{ flex: 1, marginTop: 70, marginBottom: 50 }}>
       <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, padding: 10, borderRadius: 50 }}>
         <Text style={{ display: "flex", justifyContent: "center", textAlign: "center", fontWeight: "bold", fontSize: 22, paddingTop: 22 , marginBottom : 20 }}>
