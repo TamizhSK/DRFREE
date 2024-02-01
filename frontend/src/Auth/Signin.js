@@ -88,7 +88,7 @@ export default function SigninScreen() {
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 32 }}>
           <Text style={{ color: '#6B7280', fontWeight: '600' }}>Don't have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
             <Text style={{ fontWeight: '600', color: '#FFD700' }}> Sign Up</Text>
           </TouchableOpacity>
         </View>

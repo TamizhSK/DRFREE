@@ -8,6 +8,7 @@ export default function SignUpScreen() {
   const navigation = useNavigation();
 
   const [fullName, setFullName] = useState('');
+  const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,6 +16,7 @@ export default function SignUpScreen() {
     try {
       const apiUrl = 'https://your-backend-api-url.com/signup';
       const response = await axios.post(apiUrl, {
+        userName: userName,
         fullName: fullName,
         email: email,
         password: password,
@@ -40,6 +42,19 @@ export default function SignUpScreen() {
           Lets Create a Drug Free Society!
         </Text>
         <View style={{ padding: 10}}>
+        <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>User Name</Text>
+          <TextInput
+            style={{
+              padding: 13,
+              backgroundColor: '#D1D5DB',
+              color: '#4B5563',
+              borderRadius: 20,
+              marginBottom: 8,
+            }}
+            value={userName}
+            placeholder='Enter Name'
+            onChangeText={(text) => setUserName(text)}
+          />
           <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>Full Name</Text>
           <TextInput
             style={{
