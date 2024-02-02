@@ -1,40 +1,40 @@
-import {React, useState} from 'react';
+import {React, useState, useContext} from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { themeColors } from '../../theme';
 import { useNavigation } from '@react-navigation/native';
+import {BASEURL} from '@env';
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function SigninScreen() {
-
+  const {test, login, logout} = useContext(AuthContext);
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
 
-  const handleSignIn = async () => {
+  const handleSignIn = async() => {
     try {
-      //navigation.navigate('Home');
+      // logout();
+      // navigation.navigate('Home');
       // Replace the following URL with your actual backend authentication endpoint
-      const apiUrl = 'http://172.16.22.99:6969/api/auth/login';
-      //navigation.navigate('Home');
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
+      const apiUrl = BASEURL+'/api/auth/login';
+      console.log(Email, Password);
+      // navigation.navigate('Home');
+      const response = await axios.post(apiUrl, {
+        email: Email,
+        password: Password,
       });
-
-      const responseData = await response.json();
+      
+      const responseData = response.data;
+      console.log(responseData);
 
       // Check the response status
-      if (response.ok) {
+      if (response.status==200) {
         // Handle successful login, e.g., store user token in AsyncStorage
         console.log('Login successful:', responseData);
-
+        await login(responseData);
         // Redirect to the Home screen or perform other navigation actions
         navigation.navigate('Home');
       } else {
@@ -53,7 +53,7 @@ export default function SigninScreen() {
       <View
          style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, padding: 10, borderRadius: 50}}>
         <View style = {{padding : 15 , display : "flex" , justifyContent : "center" , marginTop : 140}}>
-          <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>Email Address</Text>
+          <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>{test} Email Address</Text>
           <TextInput
             style={{
               padding: 13,
@@ -64,8 +64,8 @@ export default function SigninScreen() {
               marginTop : 10,
             }}
             placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={Email}
+            onChangeText={(e) => setEmail(e)}
           />
           <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>Password</Text>
           <TextInput
@@ -79,8 +79,8 @@ export default function SigninScreen() {
             }}
             secureTextEntry
             placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={Password}
+            onChangeText={(e) => setPassword(e)}
           />
           <TouchableOpacity style={{ alignItems: 'flex-end' }} onPress={() => navigation.navigate('passreset')}>
             <Text style={{ color: '#4B5563', marginBottom: 16 }}>Forgot Password?</Text>

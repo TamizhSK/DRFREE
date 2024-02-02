@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { themeColors } from '../../theme';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-
+import {BASEURL} from '@env';
 export default function SignUpScreen() {
   const navigation = useNavigation();
 
@@ -17,7 +17,7 @@ export default function SignUpScreen() {
 
   const handleSignUp = async () => {
     try {
-      const apiUrl = 'http://172.16.22.99:6969/api/auth/UserSignUp';
+      const apiUrl = BASEURL+'/api/auth/UserSignUp';
       const response = await axios.post(apiUrl, {
         username: userName,
         fullname: fullName,

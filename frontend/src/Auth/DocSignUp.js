@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { themeColors } from '../../theme';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import {BASEURL} from '@env';
 
 export default function DocSignUp() {
   const navigation = useNavigation();
@@ -14,10 +15,10 @@ export default function DocSignUp() {
 
   const handleSignUp = async () => {
     try {
-      const apiUrl = 'http://172.16.22.99:6969/api/auth/DocSignUp';
+      const apiUrl = BASEURL+'/api/auth/DocSignUp';
       const response = await axios.post(apiUrl, {
-        userName: userName,
-        fullName: fullName,
+        username: userName,
+        fullname: fullName,
         email: email,
         password: password,
       });

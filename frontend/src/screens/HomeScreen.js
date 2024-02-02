@@ -1,20 +1,22 @@
 // screens/HomeScreen.js
-import React ,{useState, useEffect}from 'react';
+import React ,{useState, useEffect, useContext}from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, RefreshControl } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { Ionicons } from '@expo/vector-icons';
-
+import {BASEURL} from '@env';
+import { AuthContext } from '../../context/AuthContext';
 
 const HomeScreen = ({ navigation }) => {
-
+  const {test, user, token, logout} = useContext(AuthContext);
   const [activeButton, setActiveButton] = useState(null);
   const [refresh, setRefresh] = useState(false);
   // window.reload;
   const handleserver = async() => {
     try {
       console.log("first-client");
-      const res = await fetch("http://172.16.22.99:6969/api/get");
+      console.log(user, token);
+      const res = await fetch(BASEURL+"/api/get");
       const data = await res.json();
       console.log(data.message);
     } catch (error) {
@@ -94,7 +96,7 @@ const HomeScreen = ({ navigation }) => {
   ]);
   
   
-  const baseUrl = process.env.BASEURL || "http://172.16.22.99:6969";
+  const baseUrl = BASEURL || "http://172.16.22.99:6969";
   
   const fetchData = async() => {
     setRefresh(true);
@@ -103,7 +105,7 @@ const HomeScreen = ({ navigation }) => {
       setPosts(pp);
     }
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     const allposts = data.map((d)=> {
       return{
         id : d._id,
@@ -117,16 +119,22 @@ const HomeScreen = ({ navigation }) => {
     setPosts(ap);
     setRefresh(false);
   }
+  const handleLogout = async() => {
+    await logout();
+  }
   
-  // useEffect(() => {
-  //   fetchData();
-  // },[]);
+  useEffect(() => {
+    fetchData();
+  },[]);
 
   return (
     <View style={styles.container}>
       {/* Top Navbar */}
       <View style={styles.topNavbar}>
-        <Text style={styles.logo}>DR Free</Text>
+      <TouchableOpacity
+          style={styles.createPostButton}
+          onPress={handleLogout}
+        ><Text style={styles.logo}>DR Free</Text></TouchableOpacity>
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
           <TouchableOpacity
@@ -136,7 +144,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.createPostButtonText}>+</Text>
         </TouchableOpacity>
           <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto}/>
-          <Text style={styles.userName}>Dhejan</Text>
+          <Text style={styles.userName}>{test}</Text>
         </View>
       </View>
 

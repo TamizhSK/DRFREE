@@ -1,5 +1,5 @@
 // navigation/AppNavigator.js
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
@@ -24,15 +24,17 @@ import SignUpScreen from '../Auth/Singup';
 import SigninScreen from '../Auth/Signin';
 import PasswordReset from '../Auth/PasswordReset';
 import DocSignUp from '../Auth/DocSignUp';
+import { AuthContext } from '../../context/AuthContext';
 
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
+  const {user} = useContext(AuthContext);
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName={(user===null)?"Welcome":"Home"}
         screenOptions={{
           headerShown: false,
         }}
