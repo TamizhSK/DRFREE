@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const User =require( '../models/User.js');
 const doc = require( '../models/DocUser.js');
+const community = require( '../models/Community.js');
 
 const Login = async(req, res) => {
     try{
@@ -12,11 +13,18 @@ const Login = async(req, res) => {
    const { email, password } = req.body;
        let existinguser = await User.findOne({ email });
        if(!existinguser){
-           const existingdoc = await doc.findOne({ email });
+           let existingdoc = await doc.findOne({ email });
            if(!existingdoc){
-               return res.status(404).json({ message: "User don't Exists." });
-           }else{
-               existinguser = existingdoc;
+            let existingcom = await community.findOne({ email });
+            if(!existingcom){
+               return res.status(400).json({ message: "Invalid Credentials" });
+            }
+            else{
+               existinguser = existingcom;
+           }
+        }
+           else{
+            existinguser = existingdoc;
            }
        }
        console.log('auth-login', existinguser)
@@ -56,7 +64,7 @@ const Login = async(req, res) => {
 
 const DocSignUp = async(req, res) => {
     console.log(req.body);
-    const { username, fullname, email, password } = req.body;
+    const { username, fullname, email, password, licence } = req.body;
     try{
         const existinguser = await doc.findOne({ email });
         if(existinguser){
@@ -65,7 +73,29 @@ const DocSignUp = async(req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12)
-        const newUser = await doc.create({ username, fullname, email, password: hashedPassword })
+        const newUser = await doc.create({ username, fullname, email, password: hashedPassword,licence })
+        const token = jwt.sign({email: newUser.email, id: newUser._id}, process.env.JWT_SECRET, {expiresIn: '30d'});
+        console.log('DocAuth-signup', newUser)
+        res.status(200).json({ result: newUser, token });
+    } catch(error){
+        console.log(error)
+        res.status(500).json("Something went wrong...")
+    }
+}
+
+
+const ComSignUp = async(req, res) => {
+    console.log(req.body);
+    const { communityname, email, password, licence } = req.body;
+    try{
+        const existinguser = await community.findOne({ email });
+        if(existinguser){
+            console.log(existinguser)
+            return res.status(404).json({ message: "User already Exists." });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 12)
+        const newUser = await community.create({ communityname, email, password: hashedPassword,licence })
         const token = jwt.sign({email: newUser.email, id: newUser._id}, process.env.JWT_SECRET, {expiresIn: '30d'});
         console.log('DocAuth-signup', newUser)
         res.status(200).json({ result: newUser, token });
@@ -79,4 +109,4 @@ const DocSignUp = async(req, res) => {
 
  
 
-module.exports = {Login, UserSignUp, DocSignUp};
+module.exports = {Login, UserSignUp, DocSignUp,ComSignUp};

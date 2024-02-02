@@ -34,6 +34,7 @@
     "react-native-image-picker": "^7.1.0",
     "react-native-maps": "^1.10.0",
     "react-native-modal": "^13.0.1",
+    "react-native-segmented-control-tab": "^4.0.0",
     "react-native-progress": "^5.0.1",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-swiper": "^1.6.0",
