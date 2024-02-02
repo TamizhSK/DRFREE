@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { themeColors } from '../../theme';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import {BASEURL} from '@env';
 
 export default function DocSignUp() {
   const navigation = useNavigation();
@@ -14,10 +15,10 @@ export default function DocSignUp() {
 
   const handleSignUp = async () => {
     try {
-      const apiUrl = 'https://your-backend-api-url.com/signup';
+      const apiUrl = BASEURL+'/api/auth/DocSignUp';
       const response = await axios.post(apiUrl, {
-        userName: userName,
-        fullName: fullName,
+        username: userName,
+        fullname: fullName,
         email: email,
         password: password,
       });
@@ -39,7 +40,7 @@ export default function DocSignUp() {
     <View style={{ flex: 1, marginTop: 70, marginBottom: 50 }}>
       <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, padding: 10, borderRadius: 50 }}>
         <Text style={{ display: "flex", justifyContent: "center", textAlign: "center", fontWeight: "bold", fontSize: 22, paddingTop: 22 , marginBottom : 20 }}>
-          Common Lets Create a Drug Free Society!
+          Come on Lets Create a Drug Free Society!
         </Text>
         <View style={{ padding: 10}}>
         <Text style={{ color: '#4B5563', marginLeft: 16, marginBottom: 12, fontSize: 15 }}>User Name</Text>
