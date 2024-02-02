@@ -19,6 +19,7 @@ export default function SigninScreen() {
       // logout();
       // navigation.navigate('Home');
       // Replace the following URL with your actual backend authentication endpoint
+      console.log(BASEURL);
       const apiUrl = BASEURL+'/api/auth/login';
       console.log(Email, Password);
       // navigation.navigate('Home');
@@ -85,20 +86,20 @@ export default function SigninScreen() {
           <TouchableOpacity style={{ alignItems: 'flex-end' }} onPress={() => navigation.navigate('passreset')}>
             <Text style={{ color: '#4B5563', marginBottom: 16 }}>Forgot Password?</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleSignIn} style={{ backgroundColor: '#FFD700', borderRadius: 20, paddingVertical: 12 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Login</Text>
+          <TouchableOpacity onPress={handleSignIn} style={{ backgroundColor: '#E16721CC', borderRadius: 20, paddingVertical: 12 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#000' }}>Login</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 32 }}>
           <Text style={{ color: '#6B7280', fontWeight: '600' }}>Don't have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-            <Text style={{ fontWeight: '600', color: '#FFD700' }}> Sign Up</Text>
+            <Text style={{ fontWeight: '600', color: '#E16721CC' }}> Sign Up</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 32 }}>
           <Text style={{ color: '#6B7280', fontWeight: '600' }}>Doctor?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('DocSignUp')}>
-            <Text style={{ fontWeight: '600', color: '#FFD700' }}> Sign Up</Text>
+            <Text style={{ fontWeight: '600', color: '#E16721CC' }}> Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>

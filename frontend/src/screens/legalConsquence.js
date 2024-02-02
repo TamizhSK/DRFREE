@@ -54,10 +54,13 @@ const LegalConsequencesPage = ({ navigation }) => {
                         Offenses under this act can lead to severe legal consequences, including imprisonment and fines.
                     </Text>
                     {/* You can add images, videos, or links related to this section */}
-                    <TouchableOpacity onPress={() => Linking.openURL('https://www.dor.gov.in/sites/default/files/Narcotic-Drugs-and-Psychotropic-Substances-Act-1985.pdf')}>
-                        <Image style={styles.sectionImage} source={require('../../assets/ndps_act.jpg')} />
-                        <Text style={styles.linkText}>Learn more on India.gov.in</Text>
+                    <TouchableOpacity onPress={() => Linking.openURL('https://youtu.be/2dQdnfXl_zo?si=C-v3ikNnaoDFdYe2')}>
+                        <Image style={styles.sectionImage} source={require('../../assets/ndps_act1.jpg')} />
+                        <Text style={styles.linkText}>Click image to learn more</Text>
                     </TouchableOpacity>
+                    </View>
+                    <View style={{height: 35}}/>
+                    <View style={styles.backgroundset}>
 
                     {/* Section 2: Prevention of Illicit Traffic in Narcotic Drugs and Psychotropic Substances Act, 1988 */}
                     <Text style={styles.subTitle}>Prevention of Illicit Traffic in Narcotic Drugs and Psychotropic Substances Act, 1988:</Text>
@@ -71,7 +74,23 @@ const LegalConsequencesPage = ({ navigation }) => {
                         <Image style={styles.sectionImage} source={require('../../assets/narcoticsCB.jpg')} />
                         <Text style={styles.linkText}>Learn more on India.gov.in</Text>
                     </TouchableOpacity>
-
+                    </View>
+                    <View style={{height: 35}}/>
+                    <View style={styles.backgroundset}>
+                    {/* Section 3: Indian Penal Code (IPC) */}
+                    <Text style={styles.subTitle}>Indian Penal Code (IPC):</Text>
+                    <Text style={styles.sectionText}>
+                        Various sections of the IPC deal with offenses related to drug abuse, such as possession, consumption, and trafficking.
+                        Click image to learn Indian Laws
+                    </Text>
+                    {/* You can add images, videos, or links related to this section */}
+                    <TouchableOpacity onPress={() => Linking.openURL('https://youtu.be/E_9pqkDLku0?si=nKOdf0uJNhbjcE7m')}>
+                        <Image style={styles.sectionImage} source={require('../../assets/indian_penal_law.jpg')} />
+                        <Text style={styles.linkText}>Click image to learn more</Text>
+                    </TouchableOpacity>
+                    </View>
+                    <View style={{height: 35}}/>
+                    <View style={styles.backgroundset}>
                     {/* Section 3: Indian Penal Code (IPC) */}
                     <Text style={styles.subTitle}>Indian Penal Code (IPC):</Text>
                     <Text style={styles.sectionText}>
@@ -83,7 +102,9 @@ const LegalConsequencesPage = ({ navigation }) => {
                         <Image style={styles.sectionImage} source={require('../../assets/indian_penal_code.jpg')} />
                         <Text style={styles.linkText}>Read the Indian Penal Code</Text>
                     </TouchableOpacity>
-
+                    </View>
+                    <View style={{height: 35}}/>
+                    <View style={styles.backgroundset}>
                     {/* Section 4: State-Specific Laws */}
                     <Text style={styles.subTitle}>State-Specific Laws:</Text>
                     <Text style={styles.sectionText}>
@@ -100,6 +121,7 @@ const LegalConsequencesPage = ({ navigation }) => {
                     {/* You can add more sections as needed */}
 
                 </View>
+                <View style={{height: 65}}/>
             </Animated.ScrollView>
 
             {/* Bottom Navbar */}
@@ -146,7 +168,7 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     scrollView: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F1EEEE',
     },
 
     back:{
@@ -159,7 +181,7 @@ const styles = StyleSheet.create({
       },
     headerImage: {
         width: '100%',
-        height: 210,
+        height: 240,
         resizeMode: 'cover',
         borderRadius: 10,
     },

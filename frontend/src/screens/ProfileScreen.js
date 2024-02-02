@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, ProgressBarAndroid } from 'react-native';
 import { Ionicons, Feather, MaterialCommunityIcons , } from '@expo/vector-icons'; // Import icons for menu, reels, mentions, and posts
 import BottomNavbar from '../components/BottomNavbar';
-const userData = {
-  username: 'Dhejan',
-  bio: 'Passionate Developer | 🚀 Coding enthusiast',
-  profileImage: require('../../assets/profile.jpeg'), // Replace with your user's profile image
-  posts: [
-    { id: 1, imageUrl: require('../../assets/post1.jpeg') },
-    { id: 2, imageUrl: require('../../assets/post2.jpeg') },
-    { id: 3, imageUrl: require('../../assets/post3.jpeg') },
-    // Add more posts as needed
-    { id: 4, imageUrl: require('../../assets/post4.jpeg') },
-    { id: 5, imageUrl: require('../../assets/post5.jpeg') },
-    { id: 6, imageUrl: require('../../assets/post1.jpeg') },
-    { id: 7, imageUrl: require('../../assets/post2.jpeg') },
-    { id: 8, imageUrl: require('../../assets/post3.jpeg') },
-    { id: 9, imageUrl: require('../../assets/post4.jpeg') },
-  ],
-  streakDays: 10, 
-};
+import { AuthContext } from '../../context/AuthContext';
+
 
 const ProfileScreen = ({ navigation }) => {
+  const {user, logout} = useContext(AuthContext);
+  const userData = {
+    username: user.username,
+    bio: 'Passionate Developer | 🚀 Coding enthusiast',
+    profileImage: (user.profile)?user.profile:require('../../assets/profile.jpeg'), // Replace with your user's profile image
+    posts: (user.posts?.length===0)?[
+      { id: 1, imageUrl: require('../../assets/post1.jpeg') },
+      { id: 2, imageUrl: require('../../assets/post2.jpeg') },
+      { id: 3, imageUrl: require('../../assets/post3.jpeg') },
+      // Add more posts as needed
+      { id: 4, imageUrl: require('../../assets/post4.jpeg') },
+      { id: 5, imageUrl: require('../../assets/post5.jpeg') },
+      { id: 6, imageUrl: require('../../assets/post1.jpeg') },
+      { id: 7, imageUrl: require('../../assets/post2.jpeg') },
+      { id: 8, imageUrl: require('../../assets/post3.jpeg') },
+      { id: 9, imageUrl: require('../../assets/post4.jpeg') },
+    ]:[],
+    streakDays: 10, 
+  };
   return (
     <View style={styles.container}>
     <ScrollView style={styles.scrollcontainer}>
@@ -35,7 +38,7 @@ const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
         </View>
         <View style={styles.userContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => logout()}>
           <Text style={{fontWeight:700, fontSize: 15}}>Logout</Text>
         </TouchableOpacity>
         </View>

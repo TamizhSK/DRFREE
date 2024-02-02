@@ -181,6 +181,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         backgroundColor: '#ddd',
         marginHorizontal: 2, // Increase the horizontal margin
+        borderWidth: 1,
+    borderColor: '#E16721',
       },
       activeButton: {
         backgroundColor: '#E16721CC', // Dark color for the active button

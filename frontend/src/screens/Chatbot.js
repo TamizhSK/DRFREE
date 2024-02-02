@@ -1,93 +1,134 @@
-import {View, ScrollView, Text, TouchableOpacity, Image, StyleSheet} from "react-native";
-import React, { useState } from "react";
-import { GiftedChat } from "react-native-gifted-chat";
-import { OpenAI } from "openai";
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
+import OpenAI from 'openai';
 import BottomNavbar from '../components/BottomNavbar';
+import LoadingPage from '../components/LoadingPage';
 import { Asset } from 'expo-asset';
+
 const ChatBot = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
-  const CHATGPT_API_KEY = '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';
+  const [loading, setLoading] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  const CHATGPT_API_KEY = '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';
   const openai = new OpenAI({ apiKey: CHATGPT_API_KEY });
-  
+
   const handleSend = async (newMessages = []) => {
     try {
       const userMessage = newMessages[0];
-      setMessages(previousMessages => GiftedChat.append(previousMessages, userMessage));
+      setMessages((previousMessages) => GiftedChat.append(previousMessages, userMessage));
+
+      if (showWelcome) {
+        // Handle the first visit
+        setShowWelcome(false);
+        const welcomeMessage = {
+          _id: new Date().getTime() + 1,
+          text: "Welcome! I'm here to assist you. Feel free to ask me anything.",
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'ChatBot',
+          },
+        };
+        setMessages((previousMessages) => GiftedChat.append(previousMessages, welcomeMessage));
+        return;
+      }
+
+      setLoading(true);
+
       const messageText = userMessage.text.toLowerCase();
-      const keywords = [""];
-      if (!keywords.some(keyword => messageText.includes(keyword))) {
+      const keywords = [''];
+
+      if (!keywords.some((keyword) => messageText.includes(keyword))) {
         const botMessage = {
           _id: new Date().getTime() + 1,
           text: "I'm your friend, feel free to ask me anything. I am here to help",
           createdAt: new Date(),
           user: {
             _id: 2,
-            name: 'drug Awarness Bot'
-          }
+            name: 'ChatBot',
+          },
         };
-        setMessages(previousMessages => GiftedChat.append(previousMessages, botMessage));
-        return;
+        setMessages((previousMessages) => GiftedChat.append(previousMessages, botMessage));
+      } else {
+        const response = await openai.chat.completions.create({
+          messages: [{ role: 'system', content: messageText }],
+          model: 'gpt-3.5-turbo',
+        });
+
+        const recipe = response.choices[0].message.content.toString();
+        const botMessage = {
+          _id: new Date().getTime() + 1,
+          text: recipe,
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'ChatBot',
+          },
+        };
+        setMessages((previousMessages) => GiftedChat.append(previousMessages, botMessage));
       }
 
-      const response = await openai.chat.completions.create({
-        messages: [{ role: "system", content: messageText }],
-        model: "gpt-3.5-turbo",
-      });
-
-    const recipe = response.choices[0].message.content.toString();
-      const botMessage = {
-        _id: new Date().getTime() + 1,
-        text: recipe,
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'Food Bot'
-        }
-      };
-      setMessages(previousMessages => GiftedChat.append(previousMessages, botMessage));
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      // You might want to display an error message to the user
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    // Optionally, you can add some initialization logic here
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
-        <View style={styles.topNavbar}>
+      <View style={styles.topNavbar}>
         <View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <View style={styles.back}>
-          <Text style={styles.backButton}>{'◀︎'}</Text>
-          <Text style={styles.logo}>Chatbot</Text>
-          </View>
-        </TouchableOpacity>
+              <Text style={styles.backButton}>{'◀︎'}</Text>
+              <Text style={styles.logo}>Chatbot</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.userContainer}>
-          {/* Add the user's profile picture and name */}
           <Image
             source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }}
             style={styles.userPhoto}
           />
         </View>
       </View>
-        <GiftedChat
-          messages={messages}
-          onSend={newMessages => handleSend(newMessages)}
-          user={{ _id: 1 }}
-        />
-        <View style={{paddingBottom:38,borderTopWidth: 1,}}></View>
-        {/* Bottom Navbar */}
+
+      {loading && <LoadingPage />}
+
+      {showWelcome && (
+        <View style={styles.welcomeContainer}>
+          <Text style={styles.welcomeText}>Welcome! I'm here to assist you.</Text>
+          <Text style={styles.welcomeText}>Feel free to ask me anything.</Text>
+          <Image
+            source={{ uri: Asset.fromModule(require('../../assets/aichatbotwelcome.jpg')).uri }}
+            style={{height: 200, width: 200, borderRadius: 100}}
+          />
+        </View>
+      )}
+
+      <GiftedChat messages={messages} onSend={handleSend} user={{ _id: 1 }} />
+
+      <View style={{ paddingBottom: 52, borderTopWidth: 1 }}></View>
       <BottomNavbar navigation={navigation} />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'fff', // Use a color that represents a drug-free theme
+    backgroundColor: 'fff',
     margin: 10,
-    paddingTop:0,
-    marginBottom:0,
+    paddingTop: 0,
+    marginBottom: 0,
   },
   topNavbar: {
     flexDirection: 'row',
@@ -100,7 +141,7 @@ const styles = StyleSheet.create({
   logo: {
     fontWeight: 'bold',
     fontSize: 28,
-    color: '#000', // White color for the logo text
+    color: '#000',
   },
   userContainer: {
     flexDirection: 'row',
@@ -112,18 +153,28 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginRight: 10,
   },
+  welcomeContainer: {
+    alignItems: 'center',
+    padding: 20,
+    paddingTop: 100,
+  },
+  welcomeText: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
   userName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#000', // White color for the username text
+    color: '#000',
   },
-  back:{
+  back: {
     flexDirection: 'row',
-  alignItems: 'center',
+    alignItems: 'center',
   },
-  backButton:{
+  backButton: {
     fontSize: 25,
     paddingBottom: 5,
   },
 });
-export default ChatBot;
+
+export default ChatBot;

@@ -1,5 +1,5 @@
 // navigation/AppNavigator.js
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
@@ -24,25 +24,43 @@ import SignUpScreen from '../Auth/Singup';
 import SigninScreen from '../Auth/Signin';
 import PasswordReset from '../Auth/PasswordReset';
 import DocSignUp from '../Auth/DocSignUp';
+import ProfileScreen from '../screens/ProfileScreen';
+import CreditsPage from '../screens/CreditsPage';
 import { AuthContext } from '../../context/AuthContext';
 import DocSignInScreen from '../Auth/DocSignIn';
+import DocHomeScreen from '../screens/DocHomeScreen';
+import FriendsScreen from '../chatapp/screens/FriendsScreen';
+import ChatsScreen from '../chatapp/screens/ChatsScreen';
 
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
-  const {user} = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const [user, setUser] = useState(null);
+  console.log('qwerty',authContext.user);
+  useEffect(() => {
+    const fetchData = () => {
+      // Fetch user data or any other logic from your auth context
+      const userData = authContext.user; // Replace with your actual logic
+
+      setUser(userData);
+      console.log("nav - user", user);
+    };
+
+    fetchData();
+  }, [user]);
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={(user===null)?"Welcome":"Home"}
+        initialRouteName={(user)?"Home":"Welcome"}
         screenOptions={{
           headerShown: false,
         }}
       >
-      <Stack.Screen name='passreset' component={PasswordReset} />
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
-       <Stack.Screen name="Signin" component={SigninScreen} />
+        <Stack.Screen name='passreset' component={PasswordReset} />
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="Signup" component={SignUpScreen} />
         <Stack.Screen name="DocSignin" component={DocSignInScreen} />
         <Stack.Screen name="DocSignUp" component={DocSignUp} />
@@ -63,8 +81,13 @@ const AppNavigator = () => {
         <Stack.Screen name="QuizScreen" component={QuizScreen} />
         <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
         <Stack.Screen name="CreateStory" component={CreateStory}/>
-        <Stack.Screen name='CreateStory' component={CreateStory}/>
         <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
+        <Stack.Screen name='CreditsPage' component={CreditsPage}/>
+        <Stack.Screen name='DocHomeScreen' component={DocHomeScreen}/>
+        <Stack.Screen name='Friends' component={FriendsScreen}/>
+        <Stack.Screen name='Chats' component={ChatsScreen}/>
+
+        
 
         {/* Add screens for other routes like 'CreatePost', 'PostDetail', etc. */}
       </Stack.Navigator>
