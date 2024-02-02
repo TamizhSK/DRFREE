@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  username: {
+  communityname: {
     type: String,
     required: true,
     unique: true,
-  },
-  fullname: {
-    type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -29,6 +25,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const doc = mongoose.model('doc', userSchema);
+const community = mongoose.model('community', userSchema);
 
-module.exports = doc;
+module.exports = community;
