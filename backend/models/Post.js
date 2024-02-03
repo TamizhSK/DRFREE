@@ -6,12 +6,15 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   postImage: {
-    type: String, // You might want to store the image URL or path
+    type: String,
     required: true,
   },
   userID: {
-    type: String,//mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
     required: true,
   },
   likes: {

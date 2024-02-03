@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/post'); // Adjust the path based on your project structure
-const userController = require('../controllers/user');
+// const userController = require('../controllers/user');
 // Create a new post
 router.post('/posts', async(req, res) => {
   try {
@@ -18,7 +18,7 @@ router.post('/posts', async(req, res) => {
 router.get('/posts', async (req, res) => {
   try {
     const posts = await postController.getAllPosts();
-    const alluser = await userController.getAllUsers();
+    // const alluser = await userController.getAllUsers();
     
     res.json(posts);
   } catch (error) {

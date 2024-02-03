@@ -8,10 +8,10 @@ import { AuthContext } from '../../context/AuthContext';
 const ProfileScreen = ({ navigation }) => {
   const {user, logout} = useContext(AuthContext);
   const userData = {
-    username: user.username,
+    username: user?.username,
     bio: 'Passionate Developer | 🚀 Coding enthusiast',
-    profileImage: (user.profile)?user.profile:require('../../assets/profile.jpeg'), // Replace with your user's profile image
-    posts: (user.posts?.length===0)?[
+    profileImage: (user?.profile)?user?.profile:require('../../assets/profile.jpeg'), // Replace with your user's profile image
+    posts: (user?.posts?.length===0)?[
       { id: 1, imageUrl: require('../../assets/post1.jpeg') },
       { id: 2, imageUrl: require('../../assets/post2.jpeg') },
       { id: 3, imageUrl: require('../../assets/post3.jpeg') },
@@ -38,7 +38,7 @@ const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
         </View>
         <View style={styles.userContainer}>
-        <TouchableOpacity onPress={() => logout()}>
+        <TouchableOpacity onPress={() => {logout(); navigation.navigate('Welcome');}}>
           <Text style={{fontWeight:700, fontSize: 15}}>Logout</Text>
         </TouchableOpacity>
         </View>
@@ -48,8 +48,8 @@ const ProfileScreen = ({ navigation }) => {
           <Image source={userData.profileImage} style={styles.profileImage} />
         </View>
         <View style={styles.userInfo}>
-          <Text style={styles.username}>{userData.username}</Text>
-          <Text style={styles.bio}>{userData.bio}</Text>
+          <Text style={styles.username}>{userData?.username}</Text>
+          <Text style={styles.bio}>{userData?.bio}</Text>
           <TouchableOpacity style={styles.editProfileButton}>
             <Text style={styles.editProfileButtonText}>Edit Profile</Text>
           </TouchableOpacity>

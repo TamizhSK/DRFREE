@@ -15,9 +15,11 @@ import {
   import { MaterialIcons } from "@expo/vector-icons";
   import { Entypo } from "@expo/vector-icons";
   import EmojiSelector from "react-native-emoji-selector";
-  import { UserType } from "../UserContext";
+ import {BASEURL} from '@env';
   import { useNavigation, useRoute } from "@react-navigation/native";
   import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
   
   const ChatMessagesScreen = () => {
     const [showEmojiSelector, setShowEmojiSelector] = useState(false);
@@ -29,7 +31,8 @@ import {
     const route = useRoute();
     const { recepientId } = route.params;
     const [message, setMessage] = useState("");
-    const { userId, setUserId } = useContext(UserType);
+    const [userId, setUserId ] = useState('');
+    // const 
   
     const scrollViewRef = useRef(null);
   
@@ -55,33 +58,40 @@ import {
   
     const fetchMessages = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8000/messages/${userId}/${recepientId}`
+        const user = await JSON.parse(await AsyncStorage.getItem('user'));
+        // console.log(user)
+        setUserId(user._id);
+        const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
+        const response = await axios.get(
+          `${BASEURL}/messages/${user._id}/${recepientId}/${usertype}`
         );
-        const data = await response.json();
-  
-        if (response.ok) {
-          setMessages(data);
+        const data = await response.data;
+          console.log("datammm", data);
+        if (response.status===200) {
+          setMessages(data.messages);
         } else {
           console.log("error showing messags", response.status.message);
         }
       } catch (error) {
         console.log("error fetching messages", error);
       }
+
     };
   
     useEffect(() => {
-      fetchMessages();
-    }, []);
+      fetchMessages(); 
+    }, [userId]);
   
     useEffect(() => {
       const fetchRecepientData = async () => {
         try {
-          const response = await fetch(
-            `http://localhost:8000/user/${recepientId}`
+          const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
+          console.log('recepientId', recepientId, userId, usertype);
+          const response = await axios.get(
+            `${BASEURL}/${(usertype==='user')?'doc':'user'}/${recepientId}`
           );
-  
-          const data = await response.json();
+            // console.log("response.data.recepientId", response.data);
+          const data = response.data.recepientId;
           setRecepientData(data);
         } catch (error) {
           console.log("error retrieving details", error);
@@ -92,8 +102,9 @@ import {
     }, []);
     const handleSend = async (messageType, imageUri) => {
       try {
+        const user = await JSON.parse(await AsyncStorage.getItem('user'));
         const formData = new FormData();
-        formData.append("senderId", userId);
+        formData.append("senderId", user._id);
         formData.append("recepientId", recepientId);
   
         //if the message type id image or a normal text
@@ -108,16 +119,14 @@ import {
           formData.append("messageType", "text");
           formData.append("messageText", message);
         }
-  
-        const response = await fetch("http://localhost:8000/messages", {
-          method: "POST",
-          body: formData,
+        console.log(formData);
+        const response = await axios.post(BASEURL+"/messages", {
+          senderId: user._id, recepientId: recepientId, messageType: "text", messageText:message
         });
-  
-        if (response.ok) {
+        console.log(response);
+        if (response.status===200) {
           setMessage("");
           setSelectedImage("");
-  
           fetchMessages();
         }
       } catch (error) {
@@ -126,63 +135,64 @@ import {
     };
   
     console.log("messages", selectedMessages);
-    useLayoutEffect(() => {
-      navigation.setOptions({
-        headerTitle: "",
-        headerLeft: () => (
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <Ionicons
-              onPress={() => navigation.goBack()}
-              name="arrow-back"
-              size={24}
-              color="black"
-            />
-  
-            {selectedMessages.length > 0 ? (
-              <View>
-                <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                  {selectedMessages.length}
-                </Text>
-              </View>
-            ) : (
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Image
-                  style={{
-                    width: 30,
-                    height: 30,
-                    borderRadius: 15,
-                    resizeMode: "cover",
-                  }}
-                  source={{ uri: recepientData?.image }}
-                />
-  
-                <Text style={{ marginLeft: 5, fontSize: 15, fontWeight: "bold" }}>
-                  {recepientData?.name}
-                </Text>
-              </View>
-            )}
-          </View>
-        ),
-        headerRight: () =>
-          selectedMessages.length > 0 ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-              <Ionicons name="md-arrow-redo-sharp" size={24} color="black" />
-              <Ionicons name="md-arrow-undo" size={24} color="black" />
-              <FontAwesome name="star" size={24} color="black" />
-              <MaterialIcons
-                onPress={() => deleteMessages(selectedMessages)}
-                name="delete"
-                size={24}
-                color="black"
-              />
-            </View>
-          ) : null,
-      });
-    }, [recepientData, selectedMessages]);
+//   useEffect(() => {
+//   navigation.setOptions({
+//     headerTitle: "",
+//     headerLeft: () => (
+//       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+//         <Ionicons
+//           onPress={() => navigation.goBack()}
+//           name="arrow-back"
+//           size={24}
+//           color="black"
+//         />
+
+//         {selectedMessages.length > 0 ? (
+//           <View>
+//             <Text style={{ fontSize: 16, fontWeight: "500" }}>
+//               {selectedMessages.length}
+//             </Text>
+//           </View>
+//         ) : (
+//           <View style={{ flexDirection: "row", alignItems: "center" }}>
+//             <Image
+//               style={{
+//                 width: 30,
+//                 height: 30,
+//                 borderRadius: 15,
+//                 resizeMode: "cover",
+//               }}
+//               source={{ uri: recepientData?.image }}
+//             />
+
+//             <Text style={{ marginLeft: 5, fontSize: 15, fontWeight: "bold" }}>
+//               {recepientData?.name}
+//             </Text>
+//           </View>
+//         )}
+//       </View>
+//     ),
+//     headerRight: () =>
+//       selectedMessages.length > 0 ? (
+//         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+//           <Ionicons name="md-arrow-redo-sharp" size={24} color="black" />
+//           <Ionicons name="md-arrow-undo" size={24} color="black" />
+//           <FontAwesome name="star" size={24} color="black" />
+//           <MaterialIcons
+//             onPress={() => deleteMessages(selectedMessages)}
+//             name="delete"
+//             size={24}
+//             color="black"
+//           />
+//         </View>
+//       ) : null,
+//   });
+// }, [navigation, selectedMessages, recepientData]);
+
   
     const deleteMessages = async (messageIds) => {
       try {
-        const response = await fetch("http://localhost:8000/deleteMessages", {
+        const response = await fetch("http://192.168.1.13:6969/deleteMessages", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -236,8 +246,63 @@ import {
       }
     };
     return (
-      <KeyboardAvoidingView style={{ flex: 1, backgroundColor: "#F0F0F0" }}>
-        <ScrollView ref={scrollViewRef} contentContainerStyle={{flexGrow:1}} onContentSizeChange={handleContentSizeChange}>
+      <KeyboardAvoidingView style={{ paddingTop: 30 ,flex: 1, backgroundColor: "#F0F0F0" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
+      <Ionicons
+        onPress={() => navigation.goBack()}
+        name="arrow-back"
+        size={24}
+        color="black"
+      />
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+  <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{recepientData?.username}</Text>
+</View>
+
+
+
+      {selectedMessages.length > 0 ? (
+        <View>
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>
+            {selectedMessages.length}
+          </Text>
+        </View>
+      ) : (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 15,
+              resizeMode: "cover",
+            }}
+            source={{ uri: recepientData?.image }}
+          />
+
+          <Text style={{ marginLeft: 5, fontSize: 15, fontWeight: "bold" }}>
+            {recepientData?.name}
+          </Text>
+        </View>
+      )}
+
+      {selectedMessages.length > 0 && (
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Ionicons name="arrow-redo-sharp" size={24} color="black" />
+          <Ionicons name="arrow-undo-sharp" size={24} color="black" />
+
+          <FontAwesome name="star" size={24} color="black" />
+          <MaterialIcons
+            onPress={() => deleteMessages(selectedMessages)}
+            name="delete"
+            size={24}
+            color="black"
+          />
+        </View>
+      )}
+    </View>
+        <ScrollView 
+        
+        ref={scrollViewRef} contentContainerStyle={{flexGrow:1}} onContentSizeChange={handleContentSizeChange}>
+          
           {messages.map((item, index) => {
             if (item.messageType === "text") {
               const isSelected = selectedMessages.includes(item._id);
@@ -246,7 +311,7 @@ import {
                   onLongPress={() => handleSelectMessage(item)}
                   key={index}
                   style={[
-                    item?.senderId?._id === userId
+                    item?.senderId === userId
                       ? {
                           alignSelf: "flex-end",
                           backgroundColor: "#DCF8C6",
@@ -289,57 +354,57 @@ import {
               );
             }
   
-            if (item.messageType === "image") {
-              const baseUrl =
-                "/Users/sujananand/Build/messenger-project/api/files/";
-              const imageUrl = item.imageUrl;
-              const filename = imageUrl.split("/").pop();
-              const source = { uri: baseUrl + filename };
-              return (
-                <Pressable
-                  key={index}
-                  style={[
-                    item?.senderId?._id === userId
-                      ? {
-                          alignSelf: "flex-end",
-                          backgroundColor: "#DCF8C6",
-                          padding: 8,
-                          maxWidth: "60%",
-                          borderRadius: 7,
-                          margin: 10,
-                        }
-                      : {
-                          alignSelf: "flex-start",
-                          backgroundColor: "white",
-                          padding: 8,
-                          margin: 10,
-                          borderRadius: 7,
-                          maxWidth: "60%",
-                        },
-                  ]}
-                >
-                  <View>
-                    <Image
-                      source={source}
-                      style={{ width: 200, height: 200, borderRadius: 7 }}
-                    />
-                    <Text
-                      style={{
-                        textAlign: "right",
-                        fontSize: 9,
-                        position: "absolute",
-                        right: 10,
-                        bottom: 7,
-                        color: "white",
-                        marginTop: 5,
-                      }}
-                    >
-                      {formatTime(item?.timeStamp)}
-                    </Text>
-                  </View>
-                </Pressable>
-              );
-            }
+            // if (item.messageType === "image") {
+            //   const baseUrl =
+            //     "/Users/sujananand/Build/messenger-project/api/files/";
+            //   const imageUrl = item.imageUrl;
+            //   const filename = imageUrl.split("/").pop();
+            //   const source = { uri: baseUrl + filename };
+            //   return (
+            //     <Pressable
+            //       key={index}
+            //       style={[
+            //         item?.senderId?._id === userId
+            //           ? {
+            //               alignSelf: "flex-end",
+            //               backgroundColor: "#DCF8C6",
+            //               padding: 8,
+            //               maxWidth: "60%",
+            //               borderRadius: 7,
+            //               margin: 10,
+            //             }
+            //           : {
+            //               alignSelf: "flex-start",
+            //               backgroundColor: "white",
+            //               padding: 8,
+            //               margin: 10,
+            //               borderRadius: 7,
+            //               maxWidth: "60%",
+            //             },
+            //       ]}
+            //     >
+            //       <View>
+            //         <Image
+            //           source={source}
+            //           style={{ width: 200, height: 200, borderRadius: 7 }}
+            //         />
+            //         <Text
+            //           style={{
+            //             textAlign: "right",
+            //             fontSize: 9,
+            //             position: "absolute",
+            //             right: 10,
+            //             bottom: 7,
+            //             color: "white",
+            //             marginTop: 5,
+            //           }}
+            //         >
+            //           {formatTime(item?.timeStamp)}
+            //         </Text>
+            //       </View>
+            //     </Pressable>
+            //   );
+            // }
           })}
         </ScrollView>
   

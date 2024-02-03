@@ -98,11 +98,11 @@ const HomeScreen = ({ navigation }) => {
   ]);
   
   
-  const baseUrl = process.env.BASEURL || "http://172.16.22.98:6969";
+  // const baseUrl = BASEURL || "http://192.168.25.141:6969";
   
   const fetchData = async() => {
     setRefresh(true);
-    console.log(BASEURL)
+    console.log(BASEURL);
     const res = await fetch(BASEURL+'/api/post/posts');
     if(!res.ok){
       setPosts(pp);
@@ -159,13 +159,13 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity
           onPress={() => navigation.navigate('ProfileScreen')}
           >
-          <Text style={styles.userName}>{user.username}</Text>
+          <Text style={styles.userName}>{user?.username}</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <ScrollView style={styles.scrollContainer} 
-      refreshControl={<RefreshControl refreshing={refresh} onRefresh={fetchData}/>}>
+      refreshControl={<RefreshControl refreshing={refresh} onRefresh={()=>fetchData()}/>}>
 
         <ScrollView
       horizontal
@@ -179,7 +179,7 @@ const HomeScreen = ({ navigation }) => {
         ]}
         onPress={() => handleButtonPress('Doctors')}
       >
-        <Text style={styles.buttonText}>Doctors</Text>
+        <Text style={styles.buttonText}>Connections</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

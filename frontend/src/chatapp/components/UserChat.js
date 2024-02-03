@@ -1,54 +1,66 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 // import { UserType } from "../UserContext";
+import {BASEURL} from '@env';
 
 const UserChat = ({ item }) => {
   // const { userId, setUserId } = useContext(UserType);
-  // const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [userdata, setUserdata ] = useState(null);
+
   const navigation = useNavigation();
-  // const fetchMessages = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:8000/messages/${userId}/${item._id}`
-  //     );
-  //     const data = await response.json();
+  console.log("item", item);
+  const fetchMessages = async () => {
+    try {
+      const user = await JSON.parse(await AsyncStorage.getItem('user'));
+      const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
+      const response = await axios.get(
+        `${BASEURL}/messages/${user._id}/${item}/${usertype}`
+      );
+      console.log("hii")
+  const res = await axios.get(`${BASEURL}/${(usertype==='user')?'doc':'user'}/${item}`)
+      const data = response.data;
+      // console.log(res);
+      // console.log("data", res.data);
+      if (response.status===200 && res.status===200) {
+        setMessages(data.messages);
+        setUserdata(res.data.recepientId);
+      } else {
+        console.log("error showing messags", response.status.message);
+      }
+    } catch (error) {
+      console.log("error fetching messages", error);
+    }
+  };
 
-  //     if (response.ok) {
-  //       setMessages(data);
-  //     } else {
-  //       console.log("error showing messags", response.status.message);
-  //     }
-  //   } catch (error) {
-  //     console.log("error fetching messages", error);
-  //   }
-  // };
+  useEffect(() => {
+    fetchMessages();
+  }, []);
+  console.log(messages,'efgh');
 
-  // useEffect(() => {
-  //   fetchMessages();
-  // }, []);
-  // console.log(messages);
+  const getLastMessage = () => {
+    const userMessages = messages.filter(
+      (message) => message.messageType === "text"
+    );
 
-  // const getLastMessage = () => {
-  //   const userMessages = messages.filter(
-  //     (message) => message.messageType === "text"
-  //   );
+    const n = userMessages.length;
 
-  //   const n = userMessages.length;
-
-  //   return userMessages[n - 1];
-  // };
-  // const lastMessage = getLastMessage();
-  // console.log(lastMessage);
-  // const formatTime = (time) => {
-  //   const options = { hour: "numeric", minute: "numeric" };
-  //   return new Date(time).toLocaleString("en-US", options);
-  // };
+    return userMessages[n - 1];
+  };
+  const lastMessage = getLastMessage();
+  console.log(lastMessage);
+  const formatTime = (time) => {
+    const options = { hour: "numeric", minute: "numeric" };
+    return new Date(time).toLocaleString("en-US", options);
+  };
   return (
     <Pressable
       onPress={() =>
         navigation.navigate("Messages", {
-          recepientId: item._id,
+          recepientId: item,
         })
       }
       style={{
@@ -63,13 +75,13 @@ const UserChat = ({ item }) => {
         padding: 10,
       }}
     >
-      {/* <Image
+      <Image
         style={{ width: 50, height: 50, borderRadius: 25, resizeMode: "cover" }}
         source={{ uri: item?.image }}
       />
 
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 15, fontWeight: "500" }}>{item?.name}</Text>
+        <Text style={{ fontSize: 15, fontWeight: "500" }}>{userdata?.username}</Text>
         {lastMessage && (
           <Text style={{ marginTop: 3, color: "gray", fontWeight: "500" }}>
             {lastMessage?.message}
@@ -79,9 +91,9 @@ const UserChat = ({ item }) => {
 
       <View>
         <Text style={{ fontSize: 11, fontWeight: "400", color: "#585858" }}>
-          {lastMessage && formatTime(lastMessage?.timeStamp)}
+          {lastMessage ? formatTime(lastMessage?.timeStamp) : 'No recent messages'}
         </Text>
-      </View> */}
+      </View> 
     </Pressable>
   );
 };

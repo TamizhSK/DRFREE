@@ -4,20 +4,22 @@ import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
 import { Asset } from 'expo-asset';
 import * as ImagePicker from 'expo-image-picker'; // Import the image picker library
 import BottomNavbar from '../components/BottomNavbar';
-// import {BASEURL} from '@env';
+import {BASEURL} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const CreatePost = ({ navigation }) => {
   const [caption, setCaption] = useState('');
   const [fileAttachment, setFileAttachment] = useState(null);
   // console.log(fileAttachment);
-  const baseUrl = process.env.BASEURL || "http://172.16.22.98:6969";
+  const baseUrl = BASEURL;
   console.log(baseUrl);
   const handleCreatePost = async() => {
     // Implement logic to create a post with the provided caption and fileAttachment
     // You can use API calls, state management, or any other method based on your app's architecture
     // After creating the post, navigate to the HomeScreen or wherever you want
     console.log("create Post");
+    const user = await JSON.parse(await AsyncStorage.getItem('user'));
     if (caption === ""){
       alert ("Please enter caption");
       return;
@@ -33,7 +35,8 @@ const CreatePost = ({ navigation }) => {
         body: JSON.stringify({
           caption: caption,
           postImage: fileAttachment,
-          userID: '12',
+          userID: user._id,
+          username: user.username,
         })
       });
       // console.log(res);

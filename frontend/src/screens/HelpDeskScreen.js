@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, ScrollView, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import BottomNavbar from '../components/BottomNavbar';
 import { Asset } from 'expo-asset';
+import { AuthContext } from '../../context/AuthContext';
 const HelpDeskBanners = ({ navigation }) => {
+  const {user} = useContext(AuthContext);
   return (
     <View style={styles.container}>
         <View style={styles.topNavbar}>
@@ -10,7 +12,7 @@ const HelpDeskBanners = ({ navigation }) => {
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
           <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-          <Text style={styles.userName}>Dhejan</Text>
+          <Text style={styles.userName}>{user.username}</Text>
         </View>
       </View>
       <ScrollView style={styles.scrollContainer}>
@@ -39,7 +41,7 @@ const HelpDeskBanners = ({ navigation }) => {
       {/* Doctors Connection Banner */}
       <TouchableOpacity
         style={styles.bannerContainer}
-        onPress={() => navigation.navigate('DoctorsConnection')}
+        onPress={() => navigation.navigate('DocHomeScreen')}
       >
         <Image
           source={{ uri: Asset.fromModule(require('../../assets/doctors-connection-banner.jpg')).uri }}

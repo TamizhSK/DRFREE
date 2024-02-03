@@ -1,9 +1,12 @@
 // screens/StoryScreen.js
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import BottomNavbar from '../components/BottomNavbar';
 import { Asset } from 'expo-asset';
+import { AuthContext } from '../../context/AuthContext';
 const StoryScreen = ({ navigation }) => {
+  const {user, usertype} = useContext(AuthContext);
+  console.log(usertype); 
   const stories = [
     { id: 1, 
       user: { name: 'Jane Smith', 
@@ -50,12 +53,12 @@ const StoryScreen = ({ navigation }) => {
         <Text style={styles.logo}>Story</Text>
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
-          <TouchableOpacity
+          {(usertype==='doc' || usertype==='com') && <TouchableOpacity
           style={styles.createPostButton}
           onPress={() => navigation.navigate('CreateStory')}
           >
             <Text style={styles.createPostButtonText}>+</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
           <TouchableOpacity
           onPress={() => navigation.navigate('ProfileScreen')}
           >
@@ -64,7 +67,7 @@ const StoryScreen = ({ navigation }) => {
             <TouchableOpacity
           onPress={() => navigation.navigate('ProfileScreen')}
           >
-          <Text style={styles.userName}>Dhejan</Text>
+          <Text style={styles.userName}>{user.username}</Text>
           </TouchableOpacity>
         </View>
       </View>

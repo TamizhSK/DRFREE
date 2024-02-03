@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
+import { AuthContext } from '../../context/AuthContext';
 
 const EducationOfDrug = ({ navigation }) => {
     const [activeButton, setActiveButton] = useState(null);
-  
+    const {user} = useContext(AuthContext);
     const handleButtonPress = (buttonName) => {
       setActiveButton(buttonName);
       // Add logic for handling button press (if needed)
@@ -47,7 +48,7 @@ const EducationOfDrug = ({ navigation }) => {
             source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }}
             style={styles.userPhoto}
           />
-          <Text style={styles.userName}>Dhejan</Text>
+          <Text style={styles.userName}>{user.username}</Text>
         </View>
       </View>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, FlatList, Linking } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
@@ -6,7 +6,9 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { FontAwesome } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import MapView, { Marker } from 'react-native-maps';
+import { AuthContext } from '../../context/AuthContext';
 const RehabCenter = ({ navigation }) => {
+  const {user, usertype} = useContext(AuthContext);
   const [selectedCenter, setSelectedCenter] = useState(null);
   const openSlider = (center) => {
     setSelectedCenter(center);
@@ -137,8 +139,8 @@ const RehabCenter = ({ navigation }) => {
           <Text style={styles.logo}>Rehab Centers</Text>
           <View style={styles.userContainer}>
             {/* Add the user's profile picture and name */}
-            <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-            <Text style={styles.userName}>Dhejan</Text>
+            <Image onPress={()=> navigation.navigate('ProfileScreen')} source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
+            <Text style={styles.userName} onPress={()=> navigation.navigate('ProfileScreen')}>{user.username}</Text>
           </View>
         </View>
         <Text style={{

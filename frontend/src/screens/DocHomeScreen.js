@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useLayoutEffect, useContext, useEffect, useState, TouchableOpacity, Image } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,16 +17,41 @@ const DocHomeScreen =  () => {
   const navigation = useNavigation() ;
 
   
-  // const { user } = useContext(AuthContext);
-  
+  const [refresh, setRefresh] = useState(false);
   const [UserId, setUserId] = useState("");
   const [users, setUsers] = useState([{}]);
+  const fetchData = async () => {
+    const user = await JSON.parse(await AsyncStorage.getItem('user'));
+    const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
 
+    setRefresh(true);
+    
+    // console.log("refresh", user);
+    const userId = user._id;
+    console.log('fetchuser-doc',user);
+    setUserId(userId);
+    // console.log(`${BASEURL}/users/${userId}`);
+    await axios.get(`${BASEURL}/${usertype}s/${userId}`)
+      .then((response) => {
+        console.log('res', response.data);
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.log("error retrieving users", error);
+      });
+      setRefresh(false);
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
+  // fetchUsers();
   // console.log("users", user);
 
   return (
-    <View style={{paddingTop: 30}}>
+    <ScrollView style={{paddingTop: 30}}
+    refreshControl={<RefreshControl refreshing={refresh} onRefresh={()=>fetchData()}/>}>
       {/* <View style={styles.topNavbar}>
           <Text style={styles.logo}>DR Free</Text>
           <View style={styles.userContainer}>
@@ -64,7 +89,7 @@ const DocHomeScreen =  () => {
           <User key={index} item={item} />
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

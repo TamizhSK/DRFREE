@@ -6,16 +6,20 @@ import BottomNavbar from '../components/BottomNavbar';
 import axios from 'axios';
 import {BASEURL} from '@env';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CommunityScreen = ({navigation}) => {
   
   const navigate = useNavigation();
     // Sample data for communities
     const [events, setEvents] = useState([]);
-
+    const [usertype, setUsertype] = useState('user');
+    const [user, setUser] = useState({username:""});
     useEffect(() => {
       const fetchData = async () => {
         try {
+          setUsertype(await JSON.parse(await AsyncStorage.getItem('userType')));
+          setUser(await JSON.parse(await AsyncStorage.getItem('user')));
           console.log(BASEURL);
           const response = await axios.get(BASEURL + '/api/comp/compost');
           console.log(response.data);
@@ -33,14 +37,14 @@ const CommunityScreen = ({navigation}) => {
       <View style={styles.topNavbar}>
       <Text style={styles.logo}>Community</Text>
       <View style={styles.userContainer}>
-        <View >
+        {usertype==='com' && <View >
         <TouchableOpacity style = {{backgroundColor : "grey" , borderRadius : 30 , padding : 5 , marginRight : 22 }} onPress={() => navigation.navigate('compost')} >
         <Text style={{fontSize : 20}}>+</Text>
           </TouchableOpacity>
-        </View>
-     
-        <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-        <Text style={styles.userName}>Dhejan</Text>
+        </View>}
+
+        <Image onPress={()=> navigation.navigate('ProfileScreen')} source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
+        <Text style={styles.userName} onPress={()=> navigation.navigate('ProfileScreen')}>{user?.username}</Text>
       </View>
     </View>
         <ScrollView style={styles.scrollContainer}>

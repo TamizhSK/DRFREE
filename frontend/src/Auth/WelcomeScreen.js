@@ -4,11 +4,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { themeColors } from '../../theme';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
-  const {user} = useContext(AuthContext);
-  useEffect(()=>{
+  const {user, isLogged} = useContext(AuthContext);
+  useEffect(async()=>{
+    const user = JSON.parse(await AsyncStorage.getItem('user'));
+    // isLogged();
     const fetchData = () => {
       if(user!==null){
         navigation.navigate('Home');
@@ -16,7 +19,7 @@ export default function WelcomeScreen() {
     }
     fetchData();
     console.log(user);
-  })
+  },[])
   return (
     // <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.bg }}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems : "center" , marginTop : 50}}>

@@ -1,78 +1,91 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-
+import {BASEURL} from '@env';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 const User = ({ item }) => {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   const [requestSent, setRequestSent] = useState(false);
   const [friendRequests, setFriendRequests] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
-  console.log('users: ',user);
+  const [userId, setUserId] = useState("null");
+  // console.log('users: ',user);
+        // const user = await JSON.parse(await AsyncStorage.getItem('user'));
+
   useEffect(() => {
-    // const fetchFriendRequests = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       `http://localhost:8000/friend-requests/sent/${userId}`
-    //     );
+    const fetchFriendRequests = async () => {
+      try {
+        const user = await JSON.parse(await AsyncStorage.getItem('user'));
+        const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
+        setUserId(user._id);
+        const response = await axios.get(
+          `${BASEURL}/${usertype}/friend-requests/sent/${user._id}`
+        );
 
-    //     const data = await response.json();
-    //     if (response.ok) {
-    //       setFriendRequests(data);
-    //     } else {
-    //       console.log("error", response.status);
-    //     }
-    //   } catch (error) {
-    //     console.log("error", error);
-    //   }
-    // };
+        // const data = await JSON.parse(response);
+        if (response.status===200) {
+          console.log("resp: ",response.data);
+          setFriendRequests(response.data);
+        } else {
+          console.log("error--", response.status);
+        } 
+      } catch (error) {
+        console.log("error---", error);
+      }
+    };
 
-    // fetchFriendRequests();
+    fetchFriendRequests();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchUserFriends = async () => {
-  //     try {
-  //       const response = await fetch(`http://localhost:8000/friends/${userId}`);
+  useEffect(() => { 
+    const fetchUserFriends = async () => {
+      try {
+        const user = await JSON.parse(await AsyncStorage.getItem('user'));
+        const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
+        console.log("userssshhs",user._id);
+        const response = await axios.get(`${BASEURL}/${usertype}/accepted-friends/${user._id}`);
 
-  //       const data = await response.json();
+        // const data = await response.json();
 
-  //       if (response.ok) {
-  //         setUserFriends(data);
-  //       } else {
-  //         console.log("error retrieving user friends", response.status);
-  //       }
-  //     } catch (error) {
-  //       console.log("Error message", error);
-  //     }
-  //   };
+        if (response.status===200) {
+          const data = response.data.acceptedFriends;
+          console.log(data);
+          setUserFriends(data.map((user)=> user));
+        } else {
+          console.log("error retrieving user friends", response.status);
+        }
+      } catch (error) {
+        console.log("Error message", error);
+      }
+    };
+ 
+    fetchUserFriends();
+  }, []);
+  const sendFriendRequest = async (currentUserId, selectedUserId) => {
+    try {
+      const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
+      const user = await JSON.parse(await AsyncStorage.getItem('user'));
+      console.log(currentUserId, user._id, selectedUserId, usertype);
+      const response = await axios.post(`${BASEURL}/friend-request`, 
+      { currentUserId, selectedUserId, usertype: usertype, username: user.username});
 
-  //   fetchUserFriends();
-  // }, []);
-  // const sendFriendRequest = async (currentUserId, selectedUserId) => {
-  //   try {
-  //     const response = await fetch("http://localhost:8000/friend-request", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ currentUserId, selectedUserId }),
-  //     });
-
-  //     if (response.ok) {
-  //       setRequestSent(true);
-  //     }
-  //   } catch (error) {
-  //     console.log("error message", error);
-  //   }
-  // };
-  // console.log("friend requests sent", friendRequests);
-  // console.log("user friends", userFriends);
+      if (response.status===200) {
+        setRequestSent(true);
+      }
+    } catch (error) {
+      console.log("error message---", error);
+    }
+  };
+  console.log("friend requests sent", friendRequests);
+  console.log("user friends", userFriends);
+  console.log(userFriends.includes(item));
   return (
     <Pressable
       style={{ flexDirection: "row", alignItems: "center", marginVertical: 10 }}
     >
       <View>
-        <Image
+        {/* <Image
           style={{
             width: 50,
             height: 50,
@@ -80,12 +93,12 @@ const User = ({ item }) => {
             resizeMode: "cover",
           }}
           source={{ uri: item.image }}
-        />
+        /> */}
       </View>
 
       <View style={{ marginLeft: 12, flex: 1 }}>
-        <Text style={{ fontWeight: "bold" }}>{item?.name}</Text>
-        <Text style={{ marginTop: 4, color: "gray" }}>{item?.email}</Text>
+        <Text style={{ fontWeight: "bold" }}>{item?.username}</Text>
+        {/* <Text style={{ marginTop: 4, color: "gray" }}>{item?.email}</Text> */}
       </View>     
       {userFriends.includes(item._id) ? (
         <Pressable

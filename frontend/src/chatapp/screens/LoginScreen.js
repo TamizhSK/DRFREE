@@ -10,7 +10,7 @@ import {
   import { useNavigation } from "@react-navigation/native";
   import axios from "axios";
   import AsyncStorage from "@react-native-async-storage/async-storage";
-  
+  import {BASEURL} from '@env';
   const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -39,7 +39,7 @@ import {
       };
   
       axios
-        .post("http://172.16.21.211:8000/login", user)
+        .post(BASEURL+"/login", user)
         .then((response) => {
           console.log(response);
           const token = response.data.token;

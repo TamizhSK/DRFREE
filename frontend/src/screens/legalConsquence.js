@@ -1,11 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { ScrollView, Text, View, Image, StyleSheet, Animated, TouchableOpacity, Linking } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
+import { AuthContext } from '../../context/AuthContext';
 
 const BANNER_H = 460;
 
 const LegalConsequencesPage = ({ navigation }) => {
+    const{user} = useContext(AuthContext);
     const scrollY = useRef(new Animated.Value(0)).current;
     const translateY = scrollY.interpolate({
         inputRange: [0, BANNER_H],
@@ -27,7 +29,7 @@ const LegalConsequencesPage = ({ navigation }) => {
                 <View style={styles.userContainer}>
                     {/* Add the user's profile picture and name */}
                     <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-                    <Text style={styles.userName}>Dhejan</Text>
+                    <Text style={styles.userName}>{user.username}</Text>
                 </View>
             </View>
 

@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const doc = require('../models/DocUser');
+const Message = require('../models/message');
 
 const getAllUsers = async() => {
     try {
@@ -10,21 +11,22 @@ const getAllUsers = async() => {
     }
 }
 
-const getUser = async(userID) => {
+const getUser = async(req, res) => {
     try {
+        const userID = req.params.userId;
         let user = await User.findById({userID});
         if(!user){
             user = await doc.findById({userID});
             if (!user){
                 throw new Error("no user found");
             } else{
-                return user
+                res.status(200).json(user);
             }     
         }else{
-            return user
+            res.status(200).json(user);
         }
     } catch (error) {
-        throw error;
+        res.status(500).json({message: "user not found"});
     }
     // const id = req.params.id;
 }

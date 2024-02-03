@@ -8,13 +8,15 @@ export const AuthProvider = ({children}) => {
     // const navigation = useNavigation() ;
 
     const [test, setTest] = useState("");
-    const [token, SetToken] = useState(null);
+    // const [token, SetToken] = useState(null);
     const [user, SetUser] = useState(null);
+    const [usertype, setUserType] =useState(null);
     const login = async(data) => {
         try{
             setTest("login");
             await AsyncStorage.setItem('userToken', JSON.stringify(data.token));
             await AsyncStorage.setItem('user', JSON.stringify(data.result));
+            await AsyncStorage.setItem('userType', JSON.stringify(data.usertype));
             SetUser(data.result);
         }catch(error){
             console.error(error);
@@ -26,21 +28,37 @@ export const AuthProvider = ({children}) => {
             setTest('logout');
             await AsyncStorage.removeItem('userToken');
             await AsyncStorage.removeItem('user');
+            await AsyncStorage.removeItem('userType');
             console.log('logout-ended');
+            SetUser(null);
             // navigation.navigate('Welcome');
         } catch (error) {
             console.log(error);
         }
     }
 
-    
+    const isLogged = async() => {
+        try {
+            let userToken = JSON.parse(await AsyncStorage.getItem('userToken'));
+            let userData = JSON.parse(await AsyncStorage.getItem('user'));
+            let userType = JSON.parse(await  AsyncStorage.getItem('userType')); 
+            // console.log("userData: ", userData);
+            SetUser(userData);
+            setUserType(userType);
+        } catch (error) {
+            console.log('isLoggedIn', error);
+        }
+    }
 
     useEffect(() => {
         const isLoggedIn = async() => {
             try {
                 let userToken = JSON.parse(await AsyncStorage.getItem('userToken'));
                 let userData = JSON.parse(await AsyncStorage.getItem('user'));
-                console.log("userData: ", userData);
+            let userType = JSON.parse(await  AsyncStorage.getItem('userType')); 
+            setUserType(userType);
+
+                // console.log("userData: ", userData);
                 SetUser(userData);
                 // SetToken(userToken);
             } catch (error) {
@@ -50,7 +68,7 @@ export const AuthProvider = ({children}) => {
         isLoggedIn();
     }, []);
     return(
-        <AuthContext.Provider value={{test, login, logout, user, token}}>
+        <AuthContext.Provider value={{test, login, logout, user, isLogged, usertype}}>
             {children}
         </AuthContext.Provider>
     );

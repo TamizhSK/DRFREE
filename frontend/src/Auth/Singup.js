@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView,Button,Image } from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker'; 
 import axios from 'axios';
 import { BASEURL } from '@env';
+import { AuthContext } from '../../context/AuthContext';
 
 const SignUpScreen = () => {
+  const {login} = useContext(AuthContext);
   const navigation = useNavigation();
   const [fileAttachment, setFileAttachment] = useState(null);
 
@@ -33,7 +35,7 @@ const SignUpScreen = () => {
       const res = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        quality: 0.025,
+        quality: 0.5,
         aspect: [1, 1],
         base64: true,
       });
@@ -58,6 +60,7 @@ const SignUpScreen = () => {
       });
 
       if (response.status === 200) {
+        await login(response.data);
         navigation.navigate('Home');
       } else {
         console.error('Signup failed:', response.data);
@@ -70,6 +73,7 @@ const SignUpScreen = () => {
   const handleDocSignUp = async () => {
     try {
       const apiUrl = BASEURL + '/api/auth/DocSignUp';
+      console.log(apiUrl);
       const response = await axios.post(apiUrl, {
         username: DocuserName,
         fullname: DocfullName,
@@ -79,6 +83,7 @@ const SignUpScreen = () => {
       });
 
       if (response.status === 200) {
+        await login(response.data);
         navigation.navigate('Home');
       } else {
         console.error('Signup failed:', response.data);
@@ -109,7 +114,8 @@ const SignUpScreen = () => {
     }
   };
   useEffect(() => {
-    setEmail
+    // setEmail("");
+    // setPassword("");
   })
 
 
