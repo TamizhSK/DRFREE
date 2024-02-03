@@ -19,10 +19,16 @@ export default function SigninScreen() {
       // logout();
       // navigation.navigate('Home');
       // Replace the following URL with your actual backend authentication endpoint
+<<<<<<< Updated upstream
       console.log("login_BASEURL:",BASEURL);
       const apiUrl = BASEURL+'/api/auth/login';
       console.log(apiUrl);
       console.log(apiUrl);
+=======
+      console.log('https://dr-free-server.onrender.com');
+      const apiUrl = 'https://dr-free-server.onrender.com/api/auth/login';
+      console.log(Email, Password);
+>>>>>>> Stashed changes
       // navigation.navigate('Home');
       const response = await axios.post(apiUrl, {
         email: Email,

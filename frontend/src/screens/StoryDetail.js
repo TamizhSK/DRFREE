@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text,Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text,Image, StyleSheet, ScrollView , SafeAreaView} from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 
@@ -7,6 +7,7 @@ const StoryDetail = ({ route, navigation }) => {
   const { story } = route.params;
 
   return (
+    <SafeAreaView style = {styles.container}>
     <View style={styles.container}>
         <View style={styles.topNavbar}>
         <Text style={styles.logo}>Story</Text>
@@ -23,6 +24,7 @@ const StoryDetail = ({ route, navigation }) => {
       </ScrollView>
       <BottomNavbar navigation={navigation} />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -30,7 +32,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
   },
   topNavbar: {
     flexDirection: 'row',
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     borderBottomColor: '#ddd',
+    paddingTop: 43,
   },
   userContainer: {
     flexDirection: 'row',
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#555',
     lineHeight: 26,
+    margin: 9,
   },
 });
 

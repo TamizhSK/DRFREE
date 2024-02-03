@@ -1,6 +1,10 @@
 import React from 'react';
+<<<<<<< Updated upstream
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image , Linking} from 'react-native';
 import { useState , useEffect} from 'react';
+=======
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, SafeAreaView } from 'react-native';
+>>>>>>> Stashed changes
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import axios from 'axios';
@@ -33,7 +37,13 @@ const CommunityScreen = ({navigation}) => {
     }, []);
   
     return (
+<<<<<<< Updated upstream
       <View style={styles.container}>
+=======
+      <SafeAreaView style = {styles.container}>
+        <View style={styles.container}>
+          {/* Top Navbar */}
+>>>>>>> Stashed changes
       <View style={styles.topNavbar}>
       <Text style={styles.logo}>Community</Text>
       <View style={styles.userContainer}>
@@ -72,6 +82,7 @@ const CommunityScreen = ({navigation}) => {
           ))}
         </ScrollView>
       </View>
+      </SafeAreaView>
     );
           }
     
@@ -85,8 +96,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'fff', // Use a color that represents a drug-free theme
+<<<<<<< Updated upstream
     margin: 10,
     paddingTop:10,
+=======
+>>>>>>> Stashed changes
     paddingTop:0,
     marginBottom:0,
   },
@@ -95,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    paddingTop: 35,
+    paddingTop: 43,
     borderBottomColor: '#ddd',
   },
   logo: {
@@ -132,9 +146,12 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingBottom: 5,
   },
+  pad:{
+    paddingBottom: 35,
+  },
   scrollContainer: {
     flex: 1,
-    padding: 10,
+    margin: 7,
   },
   communityCard: {
     borderWidth: 1,

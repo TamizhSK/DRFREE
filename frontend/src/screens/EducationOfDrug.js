@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 import React, { useContext, useState } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+=======
+import React, { useState } from 'react';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
+>>>>>>> Stashed changes
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { AuthContext } from '../../context/AuthContext';
@@ -32,6 +37,7 @@ const EducationOfDrug = ({ navigation }) => {
         setActiveButton(null);
       }, 50);
   return (
+    <SafeAreaView style = {styles.container}>
     <View style={styles.container}>
       <View style={styles.topNavbar}>
         <View>
@@ -122,13 +128,13 @@ const EducationOfDrug = ({ navigation }) => {
       {/*Bottom Navbar*/}
       <BottomNavbar navigation={navigation} />
     </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'fff', // Use a color that represents a drug-free theme
-      margin: 10,
+      backgroundColor: 'fff', // Use a color that represents a drug-free them
       paddingTop:0,
       marginBottom:0,
     },
@@ -137,7 +143,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: 15,
-      paddingTop: 35,
+      paddingTop: 43,
       borderBottomColor: '#ddd',
     },
     logo: {
@@ -212,6 +218,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flex: 1,
+        margin: 4,
       },
       bannerContainer: {
         flex: 1,

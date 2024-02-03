@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity , SafeAreaView} from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import OpenAI from 'openai';
 import BottomNavbar from '../components/BottomNavbar';
@@ -83,6 +83,7 @@ const ChatBot = ({ navigation }) => {
   }, []);
 
   return (
+    <SafeAreaView style = {styles.container}>
     <View style={{ flex: 1 }}>
       <View style={styles.topNavbar}>
         <View>
@@ -119,6 +120,7 @@ const ChatBot = ({ navigation }) => {
       <View style={{ paddingBottom: 52, borderTopWidth: 1 }}></View>
       <BottomNavbar navigation={navigation} />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -126,7 +128,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'fff',
-    margin: 10,
     paddingTop: 0,
     marginBottom: 0,
   },

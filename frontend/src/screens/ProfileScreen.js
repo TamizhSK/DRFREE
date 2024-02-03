@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, ProgressBarAndroid } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, ProgressBarAndroid, SafeAreaView } from 'react-native';
 import { Ionicons, Feather, MaterialCommunityIcons , } from '@expo/vector-icons'; // Import icons for menu, reels, mentions, and posts
 import BottomNavbar from '../components/BottomNavbar';
 import { AuthContext } from '../../context/AuthContext';
@@ -26,6 +26,7 @@ const ProfileScreen = ({ navigation }) => {
     streakDays: 10, 
   };
   return (
+    <SafeAreaView style = {styles.container}>
     <View style={styles.container}>
     <ScrollView style={styles.scrollcontainer}>
         <View style={styles.topNavbar}>
@@ -102,6 +103,7 @@ const ProfileScreen = ({ navigation }) => {
       </View>
     <BottomNavbar navigation={navigation}/>
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -109,19 +111,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    margin: 8,
     marginBottom:0,
   },
   scrollcontainer: {
     flex: 1,
     backgroundColor: '#fff',
+    margin: 8,
   },
   topNavbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    paddingTop: 35,
+    paddingTop: 43,
     borderBottomColor: '#ddd',
   },
   logo: {

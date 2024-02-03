@@ -219,8 +219,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 5,
-        paddingTop: 10,
+        padding: 15,
+        paddingTop: 43,
         borderBottomColor: '#ddd',
     },
     logo: {

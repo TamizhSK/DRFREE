@@ -1,6 +1,11 @@
 // screens/StoryScreen.js
+<<<<<<< Updated upstream
 import React, { useContext } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+=======
+import React from 'react';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
+>>>>>>> Stashed changes
 import BottomNavbar from '../components/BottomNavbar';
 import { Asset } from 'expo-asset';
 import { AuthContext } from '../../context/AuthContext';
@@ -47,6 +52,7 @@ const StoryScreen = ({ navigation }) => {
   ];
 
   return (
+    <SafeAreaView style = {styles.container}>
     <View style={styles.container}>
       {/* Top Navbar */}
       <View style={styles.topNavbar}>
@@ -101,6 +107,7 @@ const StoryScreen = ({ navigation }) => {
       {/* Bottom Navbar */}
       <BottomNavbar navigation={navigation} />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -108,7 +115,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    margin: 10,
     marginBottom:0,
   },
   topNavbar: {
@@ -116,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    paddingTop: 35,
+    paddingTop: 43,
     borderBottomColor: '#ddd',
   },
   logo: {
@@ -144,6 +150,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+    margin: 7,
   },
   createPostButton: {
     padding: 13, backgroundColor: "#e28743", borderRadius: 90, marginRight: 10, height: 40, 

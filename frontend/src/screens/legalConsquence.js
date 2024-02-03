@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 import React, { useContext, useRef } from 'react';
 import { ScrollView, Text, View, Image, StyleSheet, Animated, TouchableOpacity, Linking } from 'react-native';
+=======
+import React, { useRef } from 'react';
+import { ScrollView, Text, View, Image, StyleSheet, Animated, TouchableOpacity, Linking , SafeAreaView} from 'react-native';
+>>>>>>> Stashed changes
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { AuthContext } from '../../context/AuthContext';
@@ -15,6 +20,7 @@ const LegalConsequencesPage = ({ navigation }) => {
         extrapolate: 'clamp',
       });
     return (
+        <SafeAreaView style = {styles.container}>
         <View style={styles.container}>
             {/* Top Navbar */}
             <View style={styles.topNavbar}>
@@ -129,6 +135,7 @@ const LegalConsequencesPage = ({ navigation }) => {
             {/* Bottom Navbar */}
             <BottomNavbar navigation={navigation} />
         </View>
+        </SafeAreaView>
     );
 };
 

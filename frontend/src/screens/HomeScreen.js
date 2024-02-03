@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {BASEURL} from '@env';
 import { AuthContext } from '../../context/AuthContext';
 import DocHomeScreen from './DocHomeScreen';
+import CreditsPage from './CreditsPage';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -17,7 +18,7 @@ const HomeScreen = ({ navigation }) => {
   const handleserver = async() => {
     try {
       console.log("first-client");
-      const res = await fetch(BASEURL+"/api/get");
+      const res = await fetch("https://dr-free-server.onrender.com/api/get");
       const data = await res.json();
       console.log(user);
       console.log(data.message);
@@ -137,12 +138,11 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* Top Navbar */}
       <View style={styles.topNavbar}>
-      {/* <TouchableOpacity
-          style={styles.createPostButton}
-          onPress={handleLogout}
-        > */}
+      <TouchableOpacity
+          onPress={() => navigation.navigate('CreditsPage')}
+        > 
           <Text style={styles.logo}>DR Free</Text>
-        {/* </TouchableOpacity> */}
+         </TouchableOpacity> 
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
           <TouchableOpacity
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    paddingTop: 10,
+    paddingTop: 43,
     borderBottomColor: '#ddd',
   },
   logo: {

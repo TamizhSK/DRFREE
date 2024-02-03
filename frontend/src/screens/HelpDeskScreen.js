@@ -1,11 +1,17 @@
+<<<<<<< Updated upstream
 import React, { useContext } from 'react';
 import { View, ScrollView, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+=======
+import React from 'react';
+import { View, ScrollView, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+>>>>>>> Stashed changes
 import BottomNavbar from '../components/BottomNavbar';
 import { Asset } from 'expo-asset';
 import { AuthContext } from '../../context/AuthContext';
 const HelpDeskBanners = ({ navigation }) => {
   const {user} = useContext(AuthContext);
   return (
+    <SafeAreaView style = {styles.container}>
     <View style={styles.container}>
         <View style={styles.topNavbar}>
         <Text style={styles.logo}>Help Desk</Text>
@@ -62,6 +68,7 @@ const HelpDeskBanners = ({ navigation }) => {
       </ScrollView>
       <BottomNavbar navigation={navigation} />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -69,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff', // Use a color that represents a drug-free theme
-    margin: 10,
+    // margin: 10,
     paddingTop:0,
     marginBottom:0,
   },
@@ -78,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    paddingTop: 35,
+    paddingTop: 43,
     borderBottomColor: '#ddd',
   },
   logo: {
@@ -103,6 +110,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+    margin:7
   },
   bannerContainer: {
     flex: 1,

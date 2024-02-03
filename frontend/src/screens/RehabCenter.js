@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 import React, { useContext, useState } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, FlatList, Linking } from 'react-native';
+=======
+import React, { useState } from 'react';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, FlatList, Linking, SafeAreaView } from 'react-native';
+>>>>>>> Stashed changes
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -133,6 +138,7 @@ const RehabCenter = ({ navigation }) => {
   );
 
     return(
+      <SafeAreaView style = {styles.container}>
         <View style={styles.container}>
         {/* Top Navbar */}
         <View style={styles.topNavbar}>
@@ -210,6 +216,7 @@ const RehabCenter = ({ navigation }) => {
 
         <BottomNavbar navigation={navigation} />
         </View>
+        </SafeAreaView>
     );
 };
 
@@ -217,7 +224,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'fff', // Use a color that represents a drug-free theme
-        margin: 10,
         paddingTop:0,
         marginBottom:0,
       },
@@ -226,7 +232,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 15,
-        paddingTop: 35,
+        paddingTop: 43,
         borderBottomColor: '#ddd',
       },
       logo: {

@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 import React, { useContext, useRef } from 'react';
 import { ScrollView, Text, View, Image, StyleSheet, Animated , TouchableOpacity, Linking } from 'react-native';
+=======
+import React, { useRef } from 'react';
+import { ScrollView, Text, View, Image, StyleSheet, Animated , TouchableOpacity, Linking , SafeAreaView} from 'react-native';
+>>>>>>> Stashed changes
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { AuthContext } from '../../context/AuthContext';
@@ -16,6 +21,7 @@ const EduHelp = ({ navigation }) => {
       });
     
     return (
+        <SafeAreaView style = {styles.container}>
         <View style={styles.container}>
             {/* Top Navbar */}
             <View style={styles.topNavbar}>
@@ -120,6 +126,7 @@ const EduHelp = ({ navigation }) => {
             {/* Bottom Navbar */}
             <BottomNavbar navigation={navigation} />
         </View>
+        </SafeAreaView>
     );
 };
 
@@ -127,7 +134,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'fff',
-        margin: 10,
         paddingTop: 0,
         marginBottom:0,
     },
@@ -136,7 +142,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 5,
-        paddingTop: 35,
+        paddingTop: 43,
         paddingBottom: 15,
         borderBottomColor: '#ddd',
     },
@@ -162,6 +168,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         backgroundColor: '#F1EEEE',
+        margin: 7
     },
     back:{
         flexDirection: 'row',
