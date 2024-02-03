@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet , ImageBackground} from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet , ImageBackground,SafeAreaView} from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 
 const Activate = ({ navigation}) => {
-    return(
+    return(<SafeAreaView style = {styles.container}>
+
     <View style={styles.container}>
       <View style={styles.topNavbar}>
         <View>
@@ -39,6 +40,7 @@ const Activate = ({ navigation}) => {
       </ImageBackground>
       <BottomNavbar navigation={navigation}/>
     </View>
+    </SafeAreaView>
     );
 };
 
@@ -46,15 +48,15 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'fff', // Use a color that represents a drug-free theme
-      margin: 10,
       paddingTop:0,
+      marginBottom:0,
     },
     topNavbar: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: 15,
-      paddingTop: 35,
+      paddingTop: 10,
       borderBottomColor: '#ddd',
     },
     logo: {
@@ -89,7 +91,8 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'stretch',
         marginHorizontal: '-18%',
-        marginBottom: 35
+        marginBottom: 35,
+        marginHorizontal: 0,
       },
       overlay: {
         ...StyleSheet.absoluteFillObject,
@@ -104,7 +107,8 @@ const styles = StyleSheet.create({
           marginLeft: "auto",
           marginRight: "auto",
           marginTop:'25%',
-          marginBottom: -5,
+          marginBottom: 55,
+          backgroundColor: "#000410",
       },
       buttonText: {
         color:"white",fontWeight:"600",textAlign:"center", fontSize: 20

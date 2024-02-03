@@ -64,7 +64,9 @@ const EduHelp = ({ navigation }) => {
       <Text style={styles.contentText}>
         Recognizing the signs of addiction is crucial for seeking help. Look out for changes in behavior and priorities, physical symptoms such as changes in sleep patterns or weight loss, loss of interest in once enjoyed activities, and continued substance use despite negative consequences.
       </Text>
-
+      </View>
+                    <View style={{height: 35}}/>
+                    <View style={styles.backgroundset}>
       {/* Getting Help */}
       <Text style={styles.sectionTitle}>GETTING HELP</Text>
       <Text style={styles.contentText}>
@@ -74,7 +76,9 @@ const EduHelp = ({ navigation }) => {
       <Text style={styles.listItem}>2. Support Groups: Join support groups like Alcoholics Anonymous (AA) or Narcotics Anonymous (NA) for a sense of community and understanding.</Text>
       <Text style={styles.listItem}>3. Therapy and Counseling: Individual or group therapy can address underlying issues contributing to addiction.</Text>
       <Text style={styles.listItem}>4. Rehabilitation Centers: Inpatient or outpatient treatment programs offer structured support for recovery.</Text>
-
+      </View>
+                    <View style={{height: 35}}/>
+                    <View style={styles.backgroundset}>
       {/* Helpline and Support */}
       <Text style={styles.sectionTitle}>HELPLINE AND SUPPORT</Text>
       <Text style={styles.contentText}>
@@ -95,7 +99,9 @@ const EduHelp = ({ navigation }) => {
                         <Image style={styles.sectionImage} source={require('../../assets/storyPagenav.jpg')} />
                         <Text style={styles.linkText}>Visit DR Free Stories by clicking image!</Text>
                     </TouchableOpacity>
-
+                    </View>
+                    <View style={{height: 35}}/>
+                    <View style={styles.backgroundset}>
       {/* Educational Videos */}
       <Text style={styles.sectionTitle}>EDUCATIONAL VIDEOS</Text>
       <Text style={styles.contentText}>
@@ -106,6 +112,7 @@ const EduHelp = ({ navigation }) => {
                         <Text style={styles.linkText}>Visit youtube video by clicking image!</Text>
                     </TouchableOpacity>
     </View>
+    <View style={{height: 65}}/>
 
             </Animated.ScrollView>
             {/* Bottom Navbar */}
@@ -120,6 +127,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'fff',
         margin: 10,
         paddingTop: 0,
+        marginBottom:0,
     },
     topNavbar: {
         flexDirection: 'row',
@@ -151,7 +159,7 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     scrollView: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F1EEEE',
     },
     back:{
         flexDirection: 'row',
@@ -163,7 +171,7 @@ const styles = StyleSheet.create({
       },
     headerImage: {
         width: '100%',
-        height: 210,
+        height: 240,
         resizeMode: 'cover',
         borderRadius: 10,
     },

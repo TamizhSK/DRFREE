@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'fff', // Use a color that represents a drug-free theme
       margin: 10,
       paddingTop:0,
+      marginBottom:0,
     },
     topNavbar: {
       flexDirection: 'row',
@@ -180,6 +181,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         backgroundColor: '#ddd',
         marginHorizontal: 2, // Increase the horizontal margin
+        borderWidth: 1,
+    borderColor: '#E16721',
       },
       activeButton: {
         backgroundColor: '#E16721CC', // Dark color for the active button

@@ -111,7 +111,7 @@ const HelpLine = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, margin: 10}}
+      style={{ flex: 1, margin: 10,marginBottom:0,}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
 
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    paddingBottom: 40,
+    paddingBottom: 55,
   },
   titleContainer: {
     alignItems: 'center', // Center the title horizontally

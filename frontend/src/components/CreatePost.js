@@ -51,7 +51,7 @@ const CreatePost = ({ navigation }) => {
       const res = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        quality: 0.5,
+        quality: 0.025,
         aspect: [1, 1],
         base64: true,
       });
@@ -97,13 +97,14 @@ const CreatePost = ({ navigation }) => {
         onChangeText={(text) => setCaption(text)}
       />
       {/* File Attachment */}
-      <Button title="Attach Image" onPress={UploadImage} />
+      <Button title="Attach Image" onPress={UploadImage} style={{borderRadius: 100}}/>
       {fileAttachment && (
         <View>
-          <Image source={{uri: `data:image/jpeg;base64,${fileAttachment}`}} style={{ width: 200, height: 200 }} />
+          <Image source={{uri: `data:image/jpeg;base64,${fileAttachment}`}} style={{ width: 200, height:200 }} />
           <Text>{fileAttachment.fileName}</Text>
         </View>
       )}
+      <View style={{height: 10}}/>
       <Button title="Post" onPress={handleCreatePost} />
       <BottomNavbar navigation={navigation} />
     </View>

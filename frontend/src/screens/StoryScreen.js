@@ -47,21 +47,29 @@ const StoryScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* Top Navbar */}
       <View style={styles.topNavbar}>
-  <Text style={styles.logo}>Story</Text>
-  <View style={styles.userContainer}>
-    {/* Update the image source to use Asset.fromModule */}
-    <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-    <Text style={styles.userName}>Dhejan</Text>
-  </View>
-</View>
-      {/* ScrollView for stories */}
-      <ScrollView style={styles.scrollContainer}>
-      <TouchableOpacity
+        <Text style={styles.logo}>Story</Text>
+        <View style={styles.userContainer}>
+          {/* Add the user's profile picture and name */}
+          <TouchableOpacity
           style={styles.createPostButton}
           onPress={() => navigation.navigate('CreateStory')}
-        >
-          <Text style={styles.createPostButtonText}>Create Story</Text>
-        </TouchableOpacity>
+          >
+            <Text style={styles.createPostButtonText}>+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
+            <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
+          <Text style={styles.userName}>Dhejan</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* ScrollView for stories */}
+      <ScrollView style={styles.scrollContainer}>
       <View style={styles.pad}>
         {/* Map through stories and render story components */}
         {stories.map((story) => (
@@ -98,6 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     margin: 10,
+    marginBottom:0,
   },
   topNavbar: {
     flexDirection: 'row',
@@ -128,24 +137,16 @@ const styles = StyleSheet.create({
     color: '#000', // White color for the username text
   },
   pad:{
-    paddingBottom: 30,
+    paddingBottom: 35,
   },
   scrollContainer: {
     flex: 1,
   },
   createPostButton: {
-    backgroundColor: '#E16721CC',
-    borderRadius: 10,
-    paddingVertical: 15,
-    alignItems: 'center',
-    marginBottom: 20,
-    margin: 10,
-    borderTopWidth: 0,
+    padding: 13, backgroundColor: "#e28743", borderRadius: 90, marginRight: 10, height: 40, 
   },
   createPostButtonText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: 'bold',
+    color: "white", textAlign: "center", fontWeight: "bold", alignSelf: "center", marginTop: 0, fontSize: 15,
   },
   storyTitle: {
     fontSize: 18,

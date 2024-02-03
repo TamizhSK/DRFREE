@@ -1,11 +1,13 @@
 // screens/HomeScreen.js
 import React ,{useState, useEffect, useContext}from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, RefreshControl } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, RefreshControl, SafeAreaView } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { Ionicons } from '@expo/vector-icons';
 import {BASEURL} from '@env';
 import { AuthContext } from '../../context/AuthContext';
+import DocHomeScreen from './DocHomeScreen';
+
 
 const HomeScreen = ({ navigation }) => {
   const {test, user, token, logout} = useContext(AuthContext);
@@ -15,9 +17,9 @@ const HomeScreen = ({ navigation }) => {
   const handleserver = async() => {
     try {
       console.log("first-client");
-      console.log(user, token);
       const res = await fetch(BASEURL+"/api/get");
       const data = await res.json();
+      console.log(user);
       console.log(data.message);
     } catch (error) {
       console.log("first", error);
@@ -31,8 +33,8 @@ const HomeScreen = ({ navigation }) => {
       // Add logic to change the button color on press
       switch (buttonName) {
         case 'Doctors':
-          // Code to change the color of the 'Doctors' button
-          handleserver();
+          navigation.navigate('DocHomeScreen');
+          // handleserver();
           break;
         case 'RehabCenter':
           navigation.navigate('RehabCenter');
@@ -96,7 +98,7 @@ const HomeScreen = ({ navigation }) => {
   ]);
   
   
-  const baseUrl = BASEURL || "http://172.16.22.99:6969";
+  const baseUrl = process.env.BASEURL || "http://172.16.22.98:6969";
   
   const fetchData = async() => {
     setRefresh(true);
@@ -129,23 +131,36 @@ const HomeScreen = ({ navigation }) => {
   },[]);
 
   return (
+    <SafeAreaView style = {styles.container}>
+
+   
     <View style={styles.container}>
       {/* Top Navbar */}
       <View style={styles.topNavbar}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
           style={styles.createPostButton}
           onPress={handleLogout}
-        ><Text style={styles.logo}>DR Free</Text></TouchableOpacity>
+        > */}
+          <Text style={styles.logo}>DR Free</Text>
+        {/* </TouchableOpacity> */}
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
           <TouchableOpacity
           style={styles.createPostButton}
           onPress={() => navigation.navigate('CreatePost')}
-        >
-          <Text style={styles.createPostButtonText}>+</Text>
-        </TouchableOpacity>
-          <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto}/>
-          <Text style={styles.userName}>{test}</Text>
+          >
+            <Text style={styles.createPostButtonText}>+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
+            <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
+          <Text style={styles.userName}>{user.username}</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -278,21 +293,23 @@ const HomeScreen = ({ navigation }) => {
       {/* Bottom Navbar */}
       <BottomNavbar navigation={navigation} />
     </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'fff', // Use a color that represents a drug-free theme
-    margin: 10,
+    // margin: 10,
     paddingTop:0,
+    marginBottom:0,
   },
   topNavbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    paddingTop: 35,
+    paddingTop: 10,
     borderBottomColor: '#ddd',
   },
   logo: {
@@ -316,7 +333,7 @@ const styles = StyleSheet.create({
     color: '#000', // White color for the username text
   },
   pad:{
-    paddingBottom: 30,
+    paddingBottom: 35,
   },
   scrollContainer: {
     flex: 1,
@@ -360,7 +377,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     marginBottom: 20,
-    margin: 7,
+    margin: 10,
     backgroundColor : '#CBC5C8CC',
   },
   postUserContainer: {
@@ -446,9 +463,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius : 4,
   },
 });
-export default HomeScreen;
-
 
 HomeScreen.navigationOptions = {
   headerMode:"none",
 };
+
+
+export default HomeScreen;
+
+

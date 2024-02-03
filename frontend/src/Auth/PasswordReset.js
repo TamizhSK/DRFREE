@@ -50,9 +50,9 @@ const ForgotPasswordScreen = () => {
       />
       <TouchableOpacity
         onPress={handleResetPassword}
-        style={{ backgroundColor: '#FFD700', paddingVertical: 14, paddingHorizontal: 24, borderRadius: 15 , marginTop : 15 }}
+        style={{ backgroundColor: '#E16721CC', paddingVertical: 14, paddingHorizontal: 24, borderRadius: 15 , marginTop : 15 }}
       >
-        <Text style={{ fontSize: 16, fontWeight: 'bold', color: themeColors.text }}>Reset Password</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', color: "#000"}}>Reset Password</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginTop: 20 }}>
         <Text style={{ color: '#6B7280' }}>Back to Login</Text>

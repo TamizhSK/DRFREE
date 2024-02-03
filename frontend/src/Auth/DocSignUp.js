@@ -96,14 +96,14 @@ export default function DocSignUp() {
             placeholder='Enter Password'
             onChangeText={(text) => setPassword(text)}
           />
-          <TouchableOpacity onPress={handleSignUp} style={{ backgroundColor: '#FFD700', borderRadius: 20, paddingVertical: 12 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Sign Up</Text>
+          <TouchableOpacity onPress={handleSignUp} style={{ backgroundColor: '#E16721CC', borderRadius: 20, paddingVertical: 12 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#000' }}>Sign Up</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 12 }}>
           <Text style={{ color: '#6B7280', fontWeight: '600' }}>Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
-            <Text style={{ fontWeight: '600', color: '#FFD700' }}> Login</Text>
+            <Text style={{ fontWeight: '600', color: '#E16721CC' }}> Login</Text>
           </TouchableOpacity>
         </View>
       </View>
