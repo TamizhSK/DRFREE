@@ -95,7 +95,7 @@ const ComSignUp = async(req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12)
-        const newUser = await community.create({ communityname, email, password: hashedPassword,licence })
+        const newUser = await community.create({ username: communityname, email, password: hashedPassword,licence })
         const token = jwt.sign({email: newUser.email, id: newUser._id}, process.env.JWT_SECRET, {expiresIn: '30d'});
         console.log('DocAuth-signup', newUser)
         res.status(200).json({ result: newUser, token });

@@ -20,6 +20,7 @@ export default function SigninScreen() {
       // navigation.navigate('Home');
       // Replace the following URL with your actual backend authentication endpoint
       const apiUrl = BASEURL+'/api/auth/login';
+      console.log(apiUrl);
       console.log(Email, Password);
       // navigation.navigate('Home');
       const response = await axios.post(apiUrl, {

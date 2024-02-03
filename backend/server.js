@@ -9,10 +9,13 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 const Postrouter = require('./routers/Post');
 const Authrouter = require('./routers/Auth');
+const Compostrouter =  require('./routers/Compost')
 
 
 app.use('/api/post', Postrouter ); // Post routers  
 app.use('/api/auth', Authrouter ); // Auth Routers
+app.use('/api/comp' , Compostrouter );
+
 // app.use('/api/auth', Authrouter); // Auth Routers
 app.get("/api/get", (req, res)=>{
     console.log("first-server")

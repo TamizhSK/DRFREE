@@ -14,8 +14,7 @@ const eventSchema = new mongoose.Schema({
     required: true,
   },
   Org_Id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Organization',
+    type: String,
     required: true,
   },
   reg_link: {

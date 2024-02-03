@@ -77,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
       [postId]: prevLikes[postId] + 1,
     }));
   };
-  const pp = [
+  const pp = [   
     { id: 1, user: { name: 'Dhejan', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri }, content: 'Post 1', imageUrl:Asset.fromModule(require('../../assets/post1.jpeg')).uri, caption: 'Promoting a drug-free lifestyle.' },
     { id: 2, user: { name: 'Jane Smirithy', photoUrl: Asset.fromModule(require('../../assets/profile2.jpeg')).uri  }, content: 'Post 2', imageUrl: Asset.fromModule(require('../../assets/post3.jpeg')).uri, caption: 'Choose a healthy and drug-free life.' },
     { id: 3, user: { name: 'Jawagal', photoUrl: Asset.fromModule(require('../../assets/profile4.jpeg')).uri  }, content: 'Post 3', imageUrl:Asset.fromModule(require('../../assets/post2.jpeg')).uri, caption: 'Join the movement for a drug-free society.' },
@@ -100,7 +100,8 @@ const HomeScreen = ({ navigation }) => {
   
   const fetchData = async() => {
     setRefresh(true);
-    const res = await fetch(baseUrl+'/api/post/posts');
+    console.log(BASEURL)
+    const res = await fetch(BASEURL+'/api/post/posts');
     if(!res.ok){
       setPosts(pp);
     }

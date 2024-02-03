@@ -26,6 +26,7 @@ import PasswordReset from '../Auth/PasswordReset';
 import DocSignUp from '../Auth/DocSignUp';
 import { AuthContext } from '../../context/AuthContext';
 import DocSignInScreen from '../Auth/DocSignIn';
+import CommunityPost from '../components/CommunityPost';
 
 
 const Stack = createStackNavigator();
@@ -36,10 +37,12 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={(user===null)?"Welcome":"Home"}
+        // initialRouteName='compost' 
         screenOptions={{
           headerShown: false,
         }}
       >
+        <Stack.Screen name='compost' component={CommunityPost} />
       <Stack.Screen name='passreset' component={PasswordReset} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
        <Stack.Screen name="Signin" component={SigninScreen} />

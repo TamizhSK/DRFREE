@@ -1,115 +1,88 @@
-// screens/CommunityScreen.js
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image , Linking} from 'react-native';
+import { useState , useEffect} from 'react';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
-const CommunityScreen = ({ navigation }) => {
+import axios from 'axios';
+import {BASEURL} from '@env';
+import { useNavigation } from '@react-navigation/native';
+
+const CommunityScreen = ({navigation}) => {
+  
+  const navigate = useNavigation();
     // Sample data for communities
-    const communities = [
-      {
-        id: 1,
-        name: 'Phoenix Support Network',
-        events: [
-          { title: 'Event 1 : Health and Wellness Expo', image: require('../../assets/event1.jpg') },
-          { title: 'Event 2 : Recovery Symposium', image: require('../../assets/event2.jpg') },
-        ],
-        posts: [
-          { title: 'Post 1 : Tips for Maintaining a Drug-Free Life', image: require('../../assets/post1.jpg') },
-          { title: 'Post 2 : Spotlight: Making a Difference', image: require('../../assets/post2.jpg') },
-        ],
-        contact: 'PhoenixSN@gmail.com',
-      },
-      {
-        id: 2,
-        name: 'United Against Substance Abuse',
-        events: [
-          { title: 'Event 3 : Community Clean-Up Day', image: require('../../assets/event3.jpg') },
-          { title: 'Event 4 : Youth Outreach Campaign', image: require('../../assets/event4.jpg') },
-        ],
-        posts: [
-          { title: 'Post 3 : Stories of Overcoming Addiction', image: require('../../assets/post3.jpg') },
-          { title: 'Post 4 : Celebrating One Year of Sobriety!', image: require('../../assets/post4.jpg') },
-        ],
-        contact: 'UASA@gmail.com',
-      },
-      // Add more communities
-    ];
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          console.log(BASEURL);
+          const response = await axios.get(BASEURL + '/api/comp/compost');
+          console.log(response.data);
+          setEvents(response.data); // Assuming the response contains the data you want to set
+        } catch (error) {
+          console.error("Error Fetching Dataa", error);
+        }
+      };
+    
+      fetchData();
+    }, []);
   
     return (
-        <View style={styles.container}>
-          {/* Top Navbar */}
+      <View style={styles.container}>
       <View style={styles.topNavbar}>
-      <View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-            <View style={styles.back}>
-          <Text style={styles.backButton}>{'◀︎'}</Text>
-          <Text style={styles.logo}>Community</Text>
-          </View>
-        </TouchableOpacity>
+      <Text style={styles.logo}>Community</Text>
+      <View style={styles.userContainer}>
+        <View >
+        <TouchableOpacity style = {{backgroundColor : "grey" , borderRadius : 30 , padding : 5 , marginRight : 22 }} onPress={() => navigation.navigate('compost')} >
+        <Text style={{fontSize : 20}}>+</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.userContainer}>
-          {/* Add the user's profile picture and name */}
-          <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-          <Text style={styles.userName}>Dhejan</Text>
-        </View>
+     
+        <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
+        <Text style={styles.userName}>Dhejan</Text>
       </View>
-      <ScrollView style={styles.scrollContainer}>
-        {communities.map((community) => (
-          <TouchableOpacity
-            key={community.id}
-            style={styles.communityCard}
-            onPress={() => navigation.navigate('CommunityDetail', { community })}
-          >
-            <Text style={styles.communityName}>{community.name}</Text>
-            <View>
-            <Text style={styles.sectionTitle}>Events</Text>
-            <View style={styles.eventContainer}>
-              <View style={styles.parallelImagesContainer}>
-                {community.events.map((event, index) => (
-                    <Image source={event.image} style={styles.parallelImage} />
-                ))}
-              </View>
-            </View>
-            {community.events.map((event, index) => (
-              <View key={index} style={styles.eventContainer}>
-                <View style={styles.eventText}>
-                  <Text>{event.title}</Text>
+    </View>
+        <ScrollView style={styles.scrollContainer}>
+          {events.map((event, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.communityCard}
+              onPress={() => Linking.openURL(event.reg_link)}
+            >
+              <View>
+                <Text style={styles.communityName}>{event.event_Name}</Text>
+                <Image source={{ uri: `data:image/jpeg;base64,${event.event_Poster}`}} style={styles.eventImage} />
+                <View style={{display : "flex" , flexDirection : "row" , justifyContent : "space-between"}} >
+                    <Text>{event.event_Name}</Text>
+                    <Text>{event.event_description}</Text>
                 </View>
               </View>
-            ))}
-
-
-            <Text style={styles.sectionTitle}>Posts</Text>
-            <View style={styles.postContainer}>
-              <View style={styles.parallelImagesContainer}>
-                {community.posts.map((post, index) => (
-                  <Image source={post.image} style={styles.parallelImage} />
-                  ))}
-              </View>
-            </View>
-            {community.posts.map((post, index) => (
-              <View key={index} style={styles.eventContainer}>
-              <View style={styles.postText}>
-                <Text>{post.title}</Text>
-              </View>
-            </View>
-            ))}
-              <Text>Contact: {community.contact}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      <BottomNavbar navigation={navigation} />
+              <TouchableOpacity
+                style={{ padding: 12, borderRadius: 10, backgroundColor: 'red' }}
+                onPress={() => Linking.openURL(event.reg_link)}
+              >
+                <Text style={{ color: 'white' , textAlign : "center"}}>Register</Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
     );
-  };
+          }
+    
   
 const styles = StyleSheet.create({
+  eventImage: {
+    width: 330,
+    height: 300,
+  },
+
   container: {
     flex: 1,
     backgroundColor: 'fff', // Use a color that represents a drug-free theme
     margin: 10,
-    paddingTop:0,
+    paddingTop:10,
   },
   topNavbar: {
     flexDirection: 'row',
@@ -123,6 +96,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     color: '#000', // White color for the logo text
+  },
+  createPostButton: {
+    padding: 13, backgroundColor: "#e28743", borderRadius: 90, marginRight: 10, height: 40, 
+  },
+  createPostButtonText: {
+    color: "white", textAlign: "center", fontWeight: "bold", alignSelf: "center", marginTop: 0, fontSize: 15,
   },
   userContainer: {
     flexDirection: 'row',
@@ -217,4 +196,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommunityScreen;
+export default CommunityScreen

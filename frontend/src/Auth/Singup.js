@@ -47,6 +47,7 @@ const SignUpScreen = () => {
   const handleUserSignUp = async () => {
     try {
       const apiUrl = BASEURL + '/api/auth/UserSignUp';
+
       const response = await axios.post(apiUrl, {
         username: userName,
         fullname: fullName,
@@ -89,6 +90,7 @@ const SignUpScreen = () => {
 
   const handleComSignUp = async () => {
     try {
+      console.log(BASEURL);
       const apiUrl = BASEURL + '/api/auth/ComSignUp';
       const response = await axios.post(apiUrl, {
         communityname: communityName,
