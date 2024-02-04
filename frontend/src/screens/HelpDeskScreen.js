@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
 import React, { useContext } from 'react';
-import { View, ScrollView, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-=======
-import React from 'react';
 import { View, ScrollView, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
->>>>>>> Stashed changes
 import BottomNavbar from '../components/BottomNavbar';
 import { Asset } from 'expo-asset';
 import { AuthContext } from '../../context/AuthContext';

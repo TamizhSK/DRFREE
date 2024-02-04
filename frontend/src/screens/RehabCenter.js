@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
-import React, { useContext, useState } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, FlatList, Linking } from 'react-native';
-=======
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, FlatList, Linking, SafeAreaView } from 'react-native';
->>>>>>> Stashed changes
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';

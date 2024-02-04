@@ -1,11 +1,6 @@
 // screens/StoryScreen.js
-<<<<<<< Updated upstream
-import React, { useContext } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-=======
-import React from 'react';
+import React ,{ useContext }from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
->>>>>>> Stashed changes
 import BottomNavbar from '../components/BottomNavbar';
 import { Asset } from 'expo-asset';
 import { AuthContext } from '../../context/AuthContext';

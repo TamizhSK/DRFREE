@@ -1,10 +1,5 @@
-import React from 'react';
-<<<<<<< Updated upstream
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image , Linking} from 'react-native';
-import { useState , useEffect} from 'react';
-=======
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, SafeAreaView } from 'react-native';
->>>>>>> Stashed changes
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, SafeAreaView, Linking } from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
 import axios from 'axios';
@@ -37,13 +32,9 @@ const CommunityScreen = ({navigation}) => {
     }, []);
   
     return (
-<<<<<<< Updated upstream
-      <View style={styles.container}>
-=======
       <SafeAreaView style = {styles.container}>
         <View style={styles.container}>
           {/* Top Navbar */}
->>>>>>> Stashed changes
       <View style={styles.topNavbar}>
       <Text style={styles.logo}>Community</Text>
       <View style={styles.userContainer}>
@@ -58,6 +49,7 @@ const CommunityScreen = ({navigation}) => {
       </View>
     </View>
         <ScrollView style={styles.scrollContainer}>
+        <View style={styles.pad}>
           {events.map((event, index) => (
             <TouchableOpacity
               key={index}
@@ -80,7 +72,9 @@ const CommunityScreen = ({navigation}) => {
               </TouchableOpacity>
             </TouchableOpacity>
           ))}
+          </View>
         </ScrollView>
+        <BottomNavbar navigation={navigation}/>
       </View>
       </SafeAreaView>
     );
@@ -96,11 +90,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'fff', // Use a color that represents a drug-free theme
-<<<<<<< Updated upstream
-    margin: 10,
-    paddingTop:10,
-=======
->>>>>>> Stashed changes
     paddingTop:0,
     marginBottom:0,
   },
@@ -132,6 +121,9 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 15,
     marginRight: 10,
+  },
+  pad:{
+    paddingBottom: 35,
   },
   userName: {
     fontSize: 16,

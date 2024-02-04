@@ -123,7 +123,7 @@ const SignUpScreen = () => {
     switch (selectedIndex) {
       case 0:
         return (
-          <View style={{ flex: 1, marginTop: 70, marginBottom: 50 }}>
+          <View style={{ flex: 1, marginTop: 40, marginBottom: 50 }}>
           <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, padding: 10, borderRadius: 50 }}>
             <Text style={{ display: "flex", justifyContent: "center", textAlign: "center", fontWeight: "bold", fontSize: 22, paddingTop: 22 , marginBottom : 20 }}>
               Lets Create a Drug Free Society!
@@ -210,14 +210,14 @@ const SignUpScreen = () => {
                 placeholder='Enter Parent Email'
                 onChangeText={(text) => setParentEmail(text)}
               />
-              <TouchableOpacity onPress={handleUserSignUp} style={{ backgroundColor: '#FFD700', borderRadius: 20, paddingVertical: 12 }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Sign Up</Text>
+              <TouchableOpacity onPress={handleUserSignUp} style={{ backgroundColor: '#E16721CC', borderRadius: 20, paddingVertical: 12 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#000' }}>Sign Up</Text>
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 12 }}>
               <Text style={{ color: '#6B7280', fontWeight: '600' }}>Already have an account?</Text>
               <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
-                <Text style={{ fontWeight: '600', color: '#FFD700' }}> Login</Text>
+                <Text style={{ fontWeight: '600', color: '#E16721CC' }}> Login</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -226,7 +226,7 @@ const SignUpScreen = () => {
         );
       case 1:
         return (
-<View style={{ flex: 1, marginTop: 70, marginBottom: 50 }}>
+<View style={{ flex: 1, marginTop: 40, marginBottom: 50 }}>
       <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, padding: 10, borderRadius: 50 }}>
       <Text style={{ display: "flex", justifyContent: "center", textAlign: "center", fontWeight: "bold", fontSize: 22, paddingTop: 22 , marginBottom : 20 }}>
           Docter User Sign Up!
@@ -288,21 +288,22 @@ const SignUpScreen = () => {
             placeholder='Enter Password'
             onChangeText={(text) => setPassword(text)}
           />
-          <Button title="Upload Licence" onPress={UploadImage} />
+          <Button title="Upload Licence" onPress={UploadImage} style={{borderRadius:20}} />
+        <View style={{height:10}}/>
       {fileAttachment && (
         <View>
           <Image source={{uri: `data:image/jpeg;base64,${fileAttachment}`}} style={{ width: 200, height: 200 }} />
           <Text>{fileAttachment.fileName}</Text>
         </View>
       )}
-          <TouchableOpacity onPress={handleDocSignUp} style={{ backgroundColor: '#FFD700', borderRadius: 20, paddingVertical: 12 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Sign Up</Text>
+          <TouchableOpacity onPress={handleDocSignUp} style={{ backgroundColor: '#E16721CC', borderRadius: 20, paddingVertical: 12 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#000' }}>Sign Up</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 12 }}>
           <Text style={{ color: '#6B7280', fontWeight: '600' }}>Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
-            <Text style={{ fontWeight: '600', color: '#FFD700' }}> Login</Text>
+            <Text style={{ fontWeight: '600', color: '#E16721CC' }}> Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -310,7 +311,7 @@ const SignUpScreen = () => {
         );
       case 2:
         return (
-<View style={{ flex: 1, marginTop: 70, marginBottom: 50 }}>
+<View style={{ flex: 1, marginTop: 40, marginBottom: 50 }}>
       <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, padding: 10, borderRadius: 50 }}>
       <Text style={{ display: "flex", justifyContent: "center", textAlign: "center", fontWeight: "bold", fontSize: 22, paddingTop: 22 , marginBottom : 20 }}>
           Community Sign Up!
@@ -359,15 +360,16 @@ const SignUpScreen = () => {
             placeholder='Enter Password'
             onChangeText={(text) => setPassword(text)}
           />
-        <Button title="Upload Licence" onPress={UploadImage} />
+        <Button title="Upload Licence" onPress={UploadImage} style={{borderRadius:20}} />
+        <View style={{height:10}}/>
       {fileAttachment && (
         <View>
           <Image source={{uri: `data:image/jpeg;base64,${fileAttachment}`}} style={{ width: 200, height: 200 }} />
           <Text>{fileAttachment.fileName}</Text>
         </View>
       )}
-          <TouchableOpacity onPress={handleComSignUp} style={{ backgroundColor: '#FFD700', borderRadius: 20, paddingVertical: 12 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Sign Up</Text>
+          <TouchableOpacity onPress={handleComSignUp} style={{ backgroundColor: '#E16721CC', borderRadius: 20, paddingVertical: 12 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#000' }}>Sign Up</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 12 }}>
@@ -386,11 +388,8 @@ const SignUpScreen = () => {
 
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ paddingHorizontal: 8, padding: 10, borderRadius: 50 }}>
-        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 22, paddingTop: 22, marginBottom: 20 }}>
-          Lets Create a Drug Free Society!
-        </Text>
+    <View style={{ flex: 1 }}>
+    <View style={{height:45}}/>
 
         <SegmentedControlTab
           values={['User Signup', 'Doctor Signup', 'Community Signup']}
@@ -401,12 +400,15 @@ const SignUpScreen = () => {
             setSelectedIndex(index);
           }}
         />
+    <ScrollView >
+      <View style={{ paddingHorizontal: 8, padding: 10, borderRadius: 50 }}>
 
         {renderContent()}
 
       
       </View>
     </ScrollView>
+    </View>
   );
 };
 
