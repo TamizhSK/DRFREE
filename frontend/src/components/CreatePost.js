@@ -1,17 +1,20 @@
 // components/CreatePost.js
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
 import { Asset } from 'expo-asset';
 import * as ImagePicker from 'expo-image-picker'; // Import the image picker library
 import BottomNavbar from '../components/BottomNavbar';
 import {BASEURL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../context/AuthContext';
 
 
 const CreatePost = ({ navigation }) => {
   const [caption, setCaption] = useState('');
   const [fileAttachment, setFileAttachment] = useState(null);
+  const [userdata, setuserdata] = useState(useContext(AuthContext).user);
   // console.log(fileAttachment);
+  // const {user} = useContext(AuthContext);
   const baseUrl = BASEURL;
   console.log(baseUrl);
   const handleCreatePost = async() => {
@@ -20,6 +23,9 @@ const CreatePost = ({ navigation }) => {
     // After creating the post, navigate to the HomeScreen or wherever you want
     console.log("create Post");
     const user = await JSON.parse(await AsyncStorage.getItem('user'));
+    // setuserdata(user);
+    const usertype = await JSON.parse(await AsyncStorage.getItem('userType'));
+
     if (caption === ""){
       alert ("Please enter caption");
       return;
@@ -37,6 +43,7 @@ const CreatePost = ({ navigation }) => {
           postImage: fileAttachment,
           userID: user._id,
           username: user.username,
+          usertype: usertype,
         })
       });
       // console.log(res);
@@ -54,7 +61,7 @@ const CreatePost = ({ navigation }) => {
       const res = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        quality: 0.025,
+        quality: 0.3,
         aspect: [1, 1],
         base64: true,
       });
@@ -89,7 +96,7 @@ const CreatePost = ({ navigation }) => {
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
           <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
-          <Text style={styles.userName}>Dhejan</Text>
+          <Text style={styles.userName}>{userdata.username}</Text>
         </View>
       </View>
       <Text style={styles.title}>Create a #Society-Change here</Text>

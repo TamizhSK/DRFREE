@@ -11,7 +11,7 @@ import CreditsPage from './CreditsPage';
 
 
 const HomeScreen = ({ navigation }) => {
-  const {test, user, token, logout} = useContext(AuthContext);
+  const {test, user, usertype, token, logout} = useContext(AuthContext);
   const [activeButton, setActiveButton] = useState(null);
   const [refresh, setRefresh] = useState(false);
   // window.reload;
@@ -113,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
     const allposts = data.map((d)=> {
       return{
         id : d._id,
-        user: { name: 'Dhejan', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri },
+        user: { name: d.username, usertype: d.usertype, photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri },
         content: d.caption,
         imageUrl: d.postImage,
         caption: d.caption,
@@ -259,10 +259,10 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.postUserContainer}>
               <Image source={{ uri: post.user.photoUrl }} style={styles.postUserPhoto} />
               <Text style={styles.postUserName}>{post.user.name}</Text>
-              <Image
+              {(post.user.usertype==='doc') && <Image
                   source={require('../../assets/verification.png')} // Adjust the path based on your project structure
                   style={styles.verificationIcon}
-              />
+              />}
             </View>
             <Image source={{ uri: `data:image/jpeg;base64,${post.imageUrl}`}} style={styles.postImage} />
             <Text style={styles.postCaption}>{post.caption}</Text>

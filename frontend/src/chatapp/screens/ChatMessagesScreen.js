@@ -80,7 +80,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
   
     useEffect(() => {
       fetchMessages(); 
-    }, [userId]);
+    }, []);
   
     useEffect(() => {
       const fetchRecepientData = async () => {
@@ -96,7 +96,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
         } catch (error) {
           console.log("error retrieving details", error);
         }
-      };
+      }; 
   
       fetchRecepientData();
     }, []);
@@ -192,7 +192,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
   
     const deleteMessages = async (messageIds) => {
       try {
-        const response = await fetch("http://192.168.1.13:6969/deleteMessages", {
+        const response = await fetch(BASEURL+"/deleteMessages", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

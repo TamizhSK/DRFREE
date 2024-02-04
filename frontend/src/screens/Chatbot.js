@@ -12,7 +12,7 @@ const ChatBot = ({ navigation }) => {
   const [showWelcome, setShowWelcome] = useState(true);
 
   const CHATGPT_API_KEY = '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';
-  const openai = new OpenAI({ apiKey: CHATGPT_API_KEY });
+  const openai = new OpenAI({ apiKey: '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' });
 
   const handleSend = async (newMessages = []) => {
     try {

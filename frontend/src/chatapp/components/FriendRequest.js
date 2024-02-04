@@ -38,12 +38,13 @@ const FriendRequest = ({ item, friendRequests, setFriendRequests }) => {
   useEffect(()=>{
     const fetchItemUser = async() => {
       console.log("edcfgvbhjn", item);
-      try{const response = await axios.get(`${BASEURL}/api/user/get/${item}`);
-      const user = response.data;
+      const usertype =  await JSON.parse(await AsyncStorage.getItem('userType')).toLowerCase();
+      try{const response = await axios.get(`${BASEURL}/${(usertype==='doc')?'user':'doc'}/${item}`);
+      const user = response.data.recepientId;
       console.log("qwertyujk,mnbvcd",user);
       setUserdata(user);
       }catch(error){
-        console.log("error==", error);
+        console.log("error===", error);
       }
     } 
     fetchItemUser();

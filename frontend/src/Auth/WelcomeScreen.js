@@ -9,16 +9,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function WelcomeScreen() {
   const navigation = useNavigation();
   const {user, isLogged} = useContext(AuthContext);
-  useEffect(async()=>{
-    const user = JSON.parse(await AsyncStorage.getItem('user'));
+  useEffect(()=>{
     // isLogged();
-    const fetchData = () => {
+    const fetchData = async() => {
+      const user = await JSON.parse(await AsyncStorage.getItem('user'));
       if(user!==null){
         navigation.navigate('Home');
       }
     }
     fetchData();
-    console.log(user);
+    // console.log(user);
   },[])
   return (
     // <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.bg }}>
