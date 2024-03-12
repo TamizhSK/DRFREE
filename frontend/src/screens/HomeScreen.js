@@ -8,9 +8,11 @@ import {BASEURL} from '@env';
 import { AuthContext } from '../../context/AuthContext';
 import DocHomeScreen from './DocHomeScreen';
 import CreditsPage from './CreditsPage';
+import triggernotification from '../../context/Notification';
 
 
 const HomeScreen = ({ navigation }) => {
+  
   const {test, user, usertype, token, logout} = useContext(AuthContext);
   const [activeButton, setActiveButton] = useState(null);
   const [refresh, setRefresh] = useState(false);

@@ -2,12 +2,14 @@ import React, {createContext, useEffect, useState, useNavigate} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const AuthContext = createContext();
 import { useNavigation } from "@react-navigation/native";
+// import imgname from "../assets/adaptive-icon.png"
 
 
 export const AuthProvider = ({children}) => {
     // const navigation = useNavigation() ;
 
     const [test, setTest] = useState("");
+
     // const [token, SetToken] = useState(null);
     const [user, SetUser] = useState(null);
     const [usertype, setUserType] =useState(null);
@@ -70,6 +72,7 @@ export const AuthProvider = ({children}) => {
     return(
         <AuthContext.Provider value={{test, login, logout, user, isLogged, usertype}}>
             {children}
+            {/* <img src={imgname} alt="" /> */}
         </AuthContext.Provider>
     );
 }

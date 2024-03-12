@@ -16,7 +16,7 @@ const Activate = ({ navigation}) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
             <View style={styles.back}>
           <Text style={styles.backButton}>{'◀︎'}</Text>
-          <Text style={styles.logo}>Activate</Text>
+          <Text style={styles.logo}>Quiz</Text>
           </View>
         </TouchableOpacity>
         </View>
