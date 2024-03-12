@@ -11,8 +11,8 @@ const ChatBot = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
 
-  const CHATGPT_API_KEY = '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';
-  const openai = new OpenAI({ apiKey: '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' });
+  const CHATGPT_API_KEY = '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';
+  const openai = new OpenAI({ apiKey: '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' });
 
   const handleSend = async (newMessages = []) => {
     try {

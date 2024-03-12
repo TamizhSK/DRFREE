@@ -4,6 +4,7 @@ import BottomNavbar from '../components/BottomNavbar';
 import { Asset } from 'expo-asset';
 import { AuthContext } from '../../context/AuthContext';
 const HelpDeskBanners = ({ navigation }) => {
+
   const {user} = useContext(AuthContext);
   return (
     <SafeAreaView style = {styles.container}>
@@ -12,8 +13,13 @@ const HelpDeskBanners = ({ navigation }) => {
         <Text style={styles.logo}>Help Desk</Text>
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
+          <TouchableOpacity 
+          style={{display :'flex' , flexDirection:'row' , alignItems:'center'}}
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
           <Image source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }} style={styles.userPhoto} />
           <Text style={styles.userName}>{user.username}</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <ScrollView style={styles.scrollContainer}>

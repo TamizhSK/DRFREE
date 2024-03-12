@@ -8,6 +8,7 @@ import StoryDetail from '../screens/StoryDetail';
 import CommunityScreen from '../screens/CommunityScreen';
 import CreatePost from '../components/CreatePost';
 import AiChatbot from '../screens/Chatbot';
+import CommunityPost from '../components/CommunityPost';
 import EducationOfDrug from '../screens/EducationOfDrug';
 import Addversedrug from '../screens/Addversedrug';
 import LegalConsequencesPage from '../screens/legalConsquence';
@@ -67,6 +68,7 @@ const AppNavigator = () => {
         <Stack.Screen name="DocSignUp" component={DocSignUp} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Story" component={StoryScreen} />
+        <Stack.Screen name="compost" component={CommunityPost} />
         <Stack.Screen name="StoryDetail" component={StoryDetail} />
         <Stack.Screen name="HelpDesk" component={HelpDesk} />
         <Stack.Screen name="Community" component={CommunityScreen} />

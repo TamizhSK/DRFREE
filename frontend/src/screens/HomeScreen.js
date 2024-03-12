@@ -69,16 +69,14 @@ const HomeScreen = ({ navigation }) => {
       }, 50);
   const [likes, setLikes] = useState({
     1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
   });
   const handleLike = (postId) => {
     setLikes((prevLikes) => ({
       ...prevLikes,
       [postId]: prevLikes[postId] + 1,
     }));
+
+    console.log(likes);
   };
   const pp = [   
     { id: 1, user: { name: 'Dhejan', photoUrl: Asset.fromModule(require('../../assets/profile.jpeg')).uri }, content: 'Post 1', imageUrl:Asset.fromModule(require('../../assets/post1.jpeg')).uri, caption: 'Promoting a drug-free lifestyle.' },
@@ -339,10 +337,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   createPostButton: {
-    padding: 13, backgroundColor: "#e28743", borderRadius: 90, marginRight: 10, height: 40, 
+    paddingY: 10 , padding : 10, backgroundColor: "#e28743",  borderRadius : 50 ,marginRight: 10, height: 45, 
   },
   createPostButtonText: {
-    color: "white", textAlign: "center", fontWeight: "bold", alignSelf: "center", marginTop: 0, fontSize: 15,
+    color: "white", textAlign: "center", fontWeight: "bold", alignSelf: "center", fontSize: 15,
   },
   buttonContainer: {
     flexDirection: 'row',

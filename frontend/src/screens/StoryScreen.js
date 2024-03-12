@@ -6,7 +6,7 @@ import { Asset } from 'expo-asset';
 import { AuthContext } from '../../context/AuthContext';
 const StoryScreen = ({ navigation }) => {
   const {user, usertype} = useContext(AuthContext);
-  console.log(usertype); 
+  // console.log(usertype); 
   const stories = [
     { id: 1, 
       user: { name: 'Jane Smith', 
@@ -85,7 +85,7 @@ const StoryScreen = ({ navigation }) => {
             {/* User details */}
             <View style={styles.storyUserContainer}>
               <Image source={{ uri: story.user.photoUrl }} style={styles.storyUserPhoto} />
-              <Text style={styles.storyUserName}>{story.user.name}</Text>
+              <Text style={styles.storyUserName}>{story.username}</Text>
               <Image
                 source={require('../../assets/verification.png')} // Verification icon
                 style={styles.verificationIcon}

@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState , useContext } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet , ImageBackground,SafeAreaView} from 'react-native';
 import { Asset } from 'expo-asset';
 import BottomNavbar from '../components/BottomNavbar';
+import { AuthContext } from '../../context/AuthContext';
 
 const Activate = ({ navigation}) => {
+
+  const {user} = useContext(AuthContext);
+
     return(<SafeAreaView style = {styles.container}>
 
     <View style={styles.container}>
@@ -18,11 +22,16 @@ const Activate = ({ navigation}) => {
         </View>
         <View style={styles.userContainer}>
           {/* Add the user's profile picture and name */}
+          <TouchableOpacity 
+          style={{display :'flex' , flexDirection:'row' , alignItems:'center'}}
+          onPress={() => navigation.navigate('ProfileScreen')}
+          >
           <Image
             source={{ uri: Asset.fromModule(require('../../assets/profile.jpeg')).uri }}
             style={styles.userPhoto}
           />
-          <Text style={styles.userName}>Dhejan</Text>
+          <Text style={styles.userName}>{user.username}</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <ImageBackground
