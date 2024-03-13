@@ -75,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
   const handleLike = (postId) => {
     setLikes((prevLikes) => ({
       ...prevLikes,
-      [postId]: prevLikes[postId] + 1,
+      [postId]: (prevLikes[postId] || 0 ) + 1,
     }));
 
     console.log(likes);

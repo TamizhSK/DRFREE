@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('../bold.ttf') format('ttf'),
+         url('../medium.ttf') format('ttf'),
+         url('../regular.ttf') format('ttf'),
+}
+  
