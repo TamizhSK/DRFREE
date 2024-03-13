@@ -2,6 +2,7 @@ import React, {createContext, useEffect, useState, useNavigate} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const AuthContext = createContext();
 import { useNavigation } from "@react-navigation/native";
+import * as Location from "expo-location";
 // import imgname from "../assets/adaptive-icon.png"
 
 
@@ -9,6 +10,7 @@ export const AuthProvider = ({children}) => {
     // const navigation = useNavigation() ;
 
     const [test, setTest] = useState("");
+    const [location, setLocation] = useState(null);
 
     // const [token, SetToken] = useState(null);
     const [user, SetUser] = useState(null);
@@ -53,24 +55,38 @@ export const AuthProvider = ({children}) => {
     }
 
     useEffect(() => {
-        const isLoggedIn = async() => {
+        const isLoggedIn = async () => {
             try {
                 let userToken = JSON.parse(await AsyncStorage.getItem('userToken'));
                 let userData = JSON.parse(await AsyncStorage.getItem('user'));
-            let userType = JSON.parse(await  AsyncStorage.getItem('userType')); 
-            setUserType(userType);
-
-                // console.log("userData: ", userData);
+                let userType = JSON.parse(await AsyncStorage.getItem('userType'));
+                setUserType(userType);
                 SetUser(userData);
-                // SetToken(userToken);
             } catch (error) {
                 console.log('isLoggedIn', error);
             }
         }
+
         isLoggedIn();
-    }, []);
+    }, []); // This useEffect runs only once on component mount
+
+    useEffect(() => {
+        const getlocation = async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== "granted") {
+                setErrorMsg("Permission to access location was denied");
+                return;
+            }
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
+        }
+
+        getlocation();
+    }, []); // This useEffect runs only once on component mount
+
+    
     return(
-        <AuthContext.Provider value={{test, login, logout, user, isLogged, usertype}}>
+        <AuthContext.Provider value={{test, login, logout, user, isLogged, usertype , location}}>
             {children}
             {/* <img src={imgname} alt="" /> */}
         </AuthContext.Provider>

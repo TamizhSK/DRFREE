@@ -10,6 +10,7 @@ import CreatePost from '../components/CreatePost';
 import AiChatbot from '../screens/Chatbot';
 import CommunityPost from '../components/CommunityPost';
 import EducationOfDrug from '../screens/EducationOfDrug';
+import CheckLocation from '../Auth/Checklocation';
 import Addversedrug from '../screens/Addversedrug';
 import LegalConsequencesPage from '../screens/legalConsquence';
 import HelpLine from '../screens/HelpLine';
@@ -75,6 +76,7 @@ const AppNavigator = () => {
         <Stack.Screen name="CreatePost" component={CreatePost} />
         <Stack.Screen name="AiChatbot" component={AiChatbot} />
         <Stack.Screen name="EducationOfDrug" component={EducationOfDrug} />
+        <Stack.Screen name='checklocation' component={CheckLocation} />
         <Stack.Screen name="Addversedrug" component={Addversedrug} />
         <Stack.Screen name="LegalConsequencesPage" component={LegalConsequencesPage} />
         <Stack.Screen name="HelpLine" component={HelpLine} />

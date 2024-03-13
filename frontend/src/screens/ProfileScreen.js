@@ -42,6 +42,9 @@ const ProfileScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => {logout(); navigation.navigate('Welcome');}}>
           <Text style={{fontWeight:700, fontSize: 15}}>Logout</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => {logout(); navigation.navigate('checklocation');}}>
+          <Text style={{fontWeight:700, fontSize: 15}}>Location</Text>
+        </TouchableOpacity>
         </View>
       </View>
       <View style={styles.header}>
